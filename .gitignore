@@ -1,0 +1,12 @@
+# 本地工具数据，不入库
+.workbuddy/
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# 临时文件
+*.tmp
