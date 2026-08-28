@@ -159,8 +159,8 @@ function F(c, key){
 }
 function clean(s){ return String(s||"").trim(); }
 
-function rankGrade(g){ return {"A":0,"B":1,"C":2,"D":3}[g] ?? 4; }
-function rankPrio(p){ return {"P0":0,"P1":1,"P2":2,"P3":3}[p] ?? 4; }
+function rankGrade(g){ var r={"A":0,"B":1,"C":2,"D":3}[g]; return r===undefined?4:r; }
+function rankPrio(p){ var r={"P0":0,"P1":1,"P2":2,"P3":3}[p]; return r===undefined?4:r; }
 
 function findTopic(q){
   var ql = q.toLowerCase();
@@ -308,12 +308,12 @@ function renderTopicNav(){
     htm += '<div class="tp" data-t="'+t+'">'+t+' '+TOPICS[t]+' <span style="opacity:.65">('+n+')</span></div>';
   }
   nav.innerHTML = htm;
-  nav.querySelectorAll(".tp").forEach(function(el){
+  Array.prototype.forEach.call(nav.querySelectorAll(".tp"), function(el){
     el.addEventListener("click", function(){
       var t = el.getAttribute("data-t");
       document.getElementById("q").value = TOPICS[t] + " 专题证据";
       renderAnswer(TOPICS[t]+" 专题全部证据", {hits: CARDS.filter(function(c){return F(c,"所属一级专题")===t;}).map(function(c){return {c:c,score:1};}), topic:t});
-      nav.querySelectorAll(".tp").forEach(function(x){x.classList.remove("on");});
+      Array.prototype.forEach.call(nav.querySelectorAll(".tp"), function(x){x.classList.remove("on");});
       el.classList.add("on");
     });
   });
@@ -336,7 +336,7 @@ function init(){
   document.getElementById("sT7").textContent=Object.keys(topicSet).length;
   var chips=document.getElementById("chips");
   chips.innerHTML=EXAMPLES.map(function(e){return '<div class="chip">'+esc(e)+'</div>';}).join("");
-  chips.querySelectorAll(".chip").forEach(function(el){
+  Array.prototype.forEach.call(chips.querySelectorAll(".chip"), function(el){
     el.addEventListener("click",function(){
       document.getElementById("q").value=el.textContent;
       ask();
@@ -347,6 +347,11 @@ function init(){
   document.getElementById("q").addEventListener("keydown",function(e){ if(e.key==="Enter") ask(); });
 }
 init();
+try{ init(); }
+catch(e){
+  var _r=document.getElementById("result");
+  if(_r) _r.innerHTML='<div class="none"><div class="big">⚠️</div>页面加载出错：'+esc(e.message||String(e))+'<br>请使用最新版浏览器，或清除缓存后重试。</div>';
+}
 })();
 </script>
 </body>
