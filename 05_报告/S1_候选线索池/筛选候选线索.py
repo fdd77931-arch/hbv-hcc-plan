@@ -16,12 +16,12 @@ OUT_ROOT = os.path.dirname(BASE)  # 05_报告
 TARGET_CSV = os.path.join(BASE, "候选线索台账.csv")
 TARGET_MD = os.path.join(BASE, "候选线索清单_初筛.md")
 
-# ---------- 专题配额（剩余，S0 已建 10 篇）----------
+# ---------- 专题配额（500 篇目标，S0 已建 10 篇 → 剩余 490 篇）----------
 QUOTA_LEFT = {
-    "T1_指南政策": 22, "T2_筛查": 23, "T3_治疗策略": 26,
-    "T4A_初治": 18, "T4B_临床治愈": 17, "T4C_干扰素": 24,
-    "T4D_新药研发": 9, "T4E_联合方案": 13, "T5_肝癌早筛": 16,
-    "T6_长期管理": 10, "T7_联盟建设": 12,
+    "T1_指南政策": 58, "T2_筛查": 59, "T3_治疗策略": 68,
+    "T4A_初治": 45, "T4B_临床治愈": 44, "T4C_干扰素": 60,
+    "T4D_新药研发": 24, "T4E_联合方案": 34, "T5_肝癌早筛": 43,
+    "T6_长期管理": 25, "T7_联盟建设": 30,
 }
 
 # ---------- 排除规则：低价值/非学术线索 ----------
@@ -101,10 +101,27 @@ def score_priority(title):
 
 # ---------- 主流程 ----------
 records = []  # (专题, media, date, title, priority, rule, year)
+# ---------- 专题别名映射（文件名归一化到正式专题）----------
+TOPIC_MAP = {
+    "T1_指南政策": "T1_指南政策", "T2_筛查": "T2_筛查", "T3_治疗策略": "T3_治疗策略",
+    "T4A_初治": "T4A_初治", "T4B_临床治愈": "T4B_临床治愈", "T4C_干扰素": "T4C_干扰素",
+    "T4D_新药研发": "T4D_新药研发", "T4E_联合方案": "T4E_联合方案",
+    "T4E_新药研发": "T4E_联合方案",  # 第二轮新药检索并入 T4E
+    "T5_肝癌早筛": "T5_肝癌早筛", "T6_长期管理": "T6_长期管理", "T7_联盟建设": "T7_联盟建设",
+    "T4D_新药研发_b": "T2_筛查",  # 母婴阻断线索并入筛查/预防
+    "T2_筛查_c": "T2_筛查",       # 疫苗接种线索并入筛查/预防
+}
+
 for fname in sorted(os.listdir(BASE)):
     if not fname.endswith("_ima原始线索.txt"):
         continue
-    topic = fname.replace("_ima原始线索.txt", "")
+    raw_topic = fname.replace("_ima原始线索.txt", "")
+    # 归一化专题名：优先按完整文件名映射（含 _b/_c 后缀），再按去后缀名映射
+    topic = TOPIC_MAP.get(raw_topic) or TOPIC_MAP.get(re.sub(r"_[bc]$", "", raw_topic)) or raw_topic
+    # 未收录专题名的防御：跳过（避免统计崩溃）
+    if topic not in QUOTA_LEFT:
+        print("⚠️  跳过未知专题: {} (来自 {})".format(topic, fname))
+        continue
     path = os.path.join(BASE, fname)
     with io.open(path, "r", encoding="utf-8") as f:
         for line in f:
@@ -128,7 +145,7 @@ records = uniq
 
 # 输出统计
 print("=" * 70)
-print("初筛通过线索总数：{} 条（原始 1100 条）".format(len(records)))
+print("初筛通过线索总数：{} 条（原始 2300 条 = 11+12 轮检索）".format(len(records)))
 print("=" * 70)
 from collections import Counter
 tc = Counter(r[0] for r in records)
