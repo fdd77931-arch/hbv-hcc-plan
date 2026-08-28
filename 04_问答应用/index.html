@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>全国肝病联盟与2030慢性肝病行动 · 专题知识库问答</title>
-<meta name="description" content="基于 55 字段结构化证据库的慢乙肝防治问答应用：证据分级、策略建议、来源可溯">
+<meta name="description" content="基于 55 字段结构化证据库的慢乙肝防治问答应用：证据分级、洞察报告、策略建议、来源可溯">
 <style>
 :root{
   --blue:#185FA5; --blue-d:#0C447C; --blue-l:#E6F1FB; --blue-ll:#F4F9FE;
@@ -25,7 +25,7 @@ h1{font-size:19px;font-weight:500;letter-spacing:.5px}
 .stats{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
 .stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:5px 12px;font-size:12px}
 .stat b{font-size:15px;font-weight:500;margin-right:4px}
-.search{position:sticky;top:0;z-index:50;background:var(--bg);padding:14px 0 10px}
+.search{position:sticky;top:0;z-index:50;background:var(--bg);padding:14px 0 8px}
 .search .box{display:flex;gap:8px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:6px 6px 6px 14px;box-shadow:0 2px 10px rgba(16,42,67,.06);transition:border-color .2s}
 .search .box:focus-within{border-color:var(--blue)}
 #q{flex:1;border:none;outline:none;font-size:15px;background:transparent;color:var(--txt);padding:8px 0}
@@ -36,6 +36,16 @@ h1{font-size:19px;font-weight:500;letter-spacing:.5px}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex-shrink:0;background:var(--card);border:1px solid var(--line);color:var(--blue);border-radius:999px;padding:5px 13px;font-size:12.5px;cursor:pointer;white-space:nowrap}
 .chip:active{background:var(--blue-l)}
+.topic-nav{display:flex;gap:8px;overflow-x:auto;padding:6px 0 2px;scrollbar-width:none}
+.topic-nav::-webkit-scrollbar{display:none}
+.tp{flex-shrink:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--txt2);white-space:nowrap}
+.tp.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+/* ===== 视图切换 ===== */
+.view-toggle{display:flex;gap:6px;margin:10px 0 2px}
+.vt{flex:1;text-align:center;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:9px 10px;font-size:13.5px;cursor:pointer;color:var(--txt2);font-weight:500;-webkit-appearance:none;appearance:none;font-family:inherit}
+.vt.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.vt .vt-s{display:block;font-size:11px;font-weight:400;opacity:.75;margin-top:1px}
+/* ===== 报告容器 ===== */
 #result{display:flex;flex-direction:column;gap:14px}
 .qa{border-radius:16px;background:var(--card);border:1px solid var(--line);overflow:hidden}
 .qline{display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);align-items:flex-start}
@@ -44,14 +54,39 @@ h1{font-size:19px;font-weight:500;letter-spacing:.5px}
 .aline{display:flex;gap:10px;padding:14px 16px}
 .aline .avatar{width:30px;height:30px;border-radius:10px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;font-weight:500}
 .aline .body{flex:1;min-width:0}
-.ans-title{font-size:14px;font-weight:500;color:var(--teal);margin-bottom:8px}
-.strategy{background:var(--teal-l);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;padding:10px 12px;font-size:13.5px;margin:8px 0 12px}
-.strategy b{color:var(--teal)}
-.evidence-list{display:flex;flex-direction:column;gap:10px}
-.ev{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
-.ev-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:5px}
-.ev-title{font-size:13.5px;font-weight:500;color:var(--txt)}
-.badge{display:inline-flex;align-items:center;border-radius:6px;padding:1.5px 8px;font-size:11.5px;font-weight:500;letter-spacing:.5px}
+/* ===== 报告头 ===== */
+.rep-head{background:linear-gradient(135deg,#0C447C 0%,#185FA5 70%,#1D9E75 150%);border-radius:16px;padding:18px 16px;color:#fff;margin-bottom:14px}
+.rep-head .rh-logo{font-size:11px;letter-spacing:2px;opacity:.8}
+.rep-head h3{font-size:16.5px;font-weight:600;margin:6px 0 4px;line-height:1.45}
+.rep-head .rh-sub{font-size:12.5px;opacity:.92}
+.rep-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.rtag{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:2px 10px;font-size:11.5px}
+.rh-src{font-size:11px;opacity:.72;margin-top:9px;border-top:1px solid rgba(255,255,255,.22);padding-top:7px}
+/* ===== 概览 ===== */
+.rep-ov{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 14px 6px;margin-bottom:14px}
+.ov-title{font-size:13px;font-weight:600;color:var(--blue-d);letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ov-title::before{content:"";width:4px;height:14px;background:var(--blue);border-radius:2px;display:inline-block}
+.ov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ov-cell{background:var(--blue-ll);border:1px solid #D7E6F7;border-radius:12px;padding:10px 6px;text-align:center}
+.ov-cell .n{font-size:21px;font-weight:600;color:var(--blue-d);line-height:1.2}
+.ov-cell .l{font-size:10.5px;color:var(--txt2);margin-top:2px}
+.finding{background:var(--blue-ll);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;padding:10px 12px;margin:12px 0 8px}
+.finding .f-t{font-size:12px;font-weight:600;color:var(--blue-d);margin-bottom:6px}
+.finding .f-it{font-size:12.8px;color:var(--txt);margin:5px 0}
+.finding .f-it b{color:var(--blue-d)}
+.finding .f-src{font-size:11px;color:var(--txt2);opacity:.85}
+/* ===== 章节 ===== */
+.chap{margin-bottom:14px}
+.chap-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.chap-no{background:var(--blue);color:#fff;border-radius:8px;padding:2px 9px;font-size:12px;font-weight:600;flex-shrink:0}
+.chap-title{font-size:15.5px;font-weight:600;color:var(--txt)}
+.chap-cnt{margin-left:auto;font-size:11.5px;color:var(--txt2);background:var(--gray-l);border-radius:999px;padding:2px 9px;flex-shrink:0}
+.chap-lead{font-size:12.8px;color:var(--txt2);background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin:6px 0 10px}
+.chap-lead b{color:var(--blue-d)}
+.insight{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:10px}
+.ins-top{display:flex;align-items:flex-start;gap:7px;flex-wrap:wrap;margin-bottom:6px}
+.ins-title{font-size:13.8px;font-weight:600;color:var(--txt);line-height:1.45;flex:1;min-width:150px}
+.badge{display:inline-flex;align-items:center;border-radius:6px;padding:1.5px 8px;font-size:11.5px;font-weight:500;letter-spacing:.5px;flex-shrink:0}
 .b-A{background:var(--blue-l);color:var(--blue-d);border:1px solid #B5D4F4}
 .b-B{background:var(--teal-l);color:var(--teal);border:1px solid #9FE1CB}
 .b-C{background:var(--amber-l);color:var(--amber);border:1px solid #FAC775}
@@ -60,22 +95,50 @@ h1{font-size:19px;font-weight:500;letter-spacing:.5px}
 .b-P1{background:var(--amber-l);color:var(--amber);border:1px solid #FAC775}
 .b-P2{background:var(--blue-l);color:var(--blue-d);border:1px solid #B5D4F4}
 .b-P3{background:var(--gray-l);color:var(--gray);border:1px solid #D3D1C7}
+.b-CN{background:#EDF7EE;color:#1E6B34;border:1px solid #BBDCC3}
+.ins-abs{font-size:13px;color:var(--txt);margin:6px 0 8px}
+.ins-abs b{color:var(--blue-d)}
+.persp{display:flex;flex-direction:column;gap:6px;margin:6px 0 2px}
+.persp-line{display:flex;gap:7px;align-items:flex-start;border-radius:9px;padding:7px 10px;font-size:12.8px}
+.persp-clin{background:var(--teal-l)}
+.persp-mkt{background:var(--amber-l)}
+.persp-line .ic{flex-shrink:0;font-size:13px;line-height:1.6}
+.persp-line .lab{font-weight:600;flex-shrink:0}
+.persp-clin .lab{color:var(--teal)}
+.persp-mkt .lab{color:var(--amber)}
+.persp-line .tx{color:var(--txt);min-width:0}
+.ins-meta{font-size:11.5px;color:var(--txt2);display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:8px;padding-top:7px;border-top:1px dashed var(--line)}
+.ins-meta a{color:var(--blue);text-decoration:none;word-break:break-all}
+/* ===== 策略要点 ===== */
+.rep-action{background:linear-gradient(135deg,#0F6E56 0%,#12805F 60%,#185FA5 150%);border-radius:16px;padding:15px 16px;color:#fff;margin-bottom:14px}
+.rep-action .a-title{font-size:13.5px;font-weight:600;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.rep-action .a-title::before{content:"";width:4px;height:14px;background:#7FE0C0;border-radius:2px;display:inline-block}
+.a-item{display:flex;gap:9px;align-items:flex-start;margin:8px 0;font-size:13px;line-height:1.55}
+.a-item .no{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;margin-top:1px}
+.a-item .tx{min-width:0}
+.a-item .tx b{color:#8FE8C8}
+.a-src{font-size:11px;opacity:.75;margin-top:9px;border-top:1px solid rgba(255,255,255,.25);padding-top:7px}
+/* ===== 证据列表视图（保留） ===== */
+.strategy{background:var(--teal-l);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;padding:10px 12px;font-size:13.5px;margin:8px 0 12px}
+.strategy b{color:var(--teal)}
+.evidence-list{display:flex;flex-direction:column;gap:10px}
+.ev{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+.ev-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:5px}
+.ev-title{font-size:13.5px;font-weight:500;color:var(--txt)}
 .ev-conc{font-size:13px;color:var(--txt);margin:4px 0}
 .ev-conc b{color:var(--blue-d)}
 .ev-meta{font-size:12px;color:var(--txt2);display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
 .ev-meta a{color:var(--blue);text-decoration:none;word-break:break-all}
 .none{text-align:center;padding:30px 16px;color:var(--txt2);font-size:13.5px}
 .none .big{font-size:30px;margin-bottom:8px}
-.topic-nav{display:flex;gap:8px;overflow-x:auto;padding:6px 0 2px;scrollbar-width:none}
-.topic-nav::-webkit-scrollbar{display:none}
-.tp{flex-shrink:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--txt2);white-space:nowrap}
-.tp.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 footer{color:var(--txt2);font-size:11.5px;text-align:center;padding:22px 16px 0;line-height:1.8}
 .hint{font-size:12px;color:var(--txt2);margin-top:8px}
 @media (max-width:480px){
   h1{font-size:17px}
   .stat b{font-size:14px}
   .qline,.aline{padding:12px 12px}
+  .ov-grid{grid-template-columns:repeat(2,1fr)}
+  .rep-head h3{font-size:15px}
 }
 </style>
 </head>
@@ -85,7 +148,7 @@ footer{color:var(--txt2);font-size:11.5px;text-align:center;padding:22px 16px 0;
   <div class="wrap">
     <div class="logo">全国肝病联盟与2030慢性肝病行动</div>
     <h1>专题知识库 · 证据问答</h1>
-    <div class="sub">结构化证据库驱动 · 证据等级分级 · 来源可追溯 · 策略建议</div>
+    <div class="sub">结构化证据库驱动 · 洞察报告 · 双视角启示 · 来源可追溯</div>
     <div class="stats">
       <div class="stat"><b id="sTotal">0</b>篇收录</div>
       <div class="stat"><b id="sChina">0</b>中国证据</div>
@@ -106,10 +169,15 @@ footer{color:var(--txt2);font-size:11.5px;text-align:center;padding:22px 16px 0;
 
   <div class="topic-nav" id="topicNav"></div>
 
+  <div class="view-toggle" id="viewToggle" style="display:none">
+    <button type="button" class="vt on" data-v="report" onclick="switchKbView('report')">📋 洞察报告<span class="vt-s">概览 · 分章 · 策略要点</span></button>
+    <button type="button" class="vt" data-v="cards" onclick="switchKbView('cards')">🗂 证据列表<span class="vt-s">逐条原始证据 · 可追溯</span></button>
+  </div>
+
   <div id="result">
     <div class="none" id="welcome">
       <div class="big">🔬</div>
-      输入问题或点击上方示例提问。<br>回答基于库内已收录证据，按证据等级与优先级排序。
+      输入问题或点击上方示例提问。<br>回答以「洞察报告」形式输出：先概览、再分章洞察、最后策略要点。
     </div>
   </div>
 
@@ -119,7 +187,7 @@ footer{color:var(--txt2);font-size:11.5px;text-align:center;padding:22px 16px 0;
   </footer>
 </div>
 
-<script id="kb-data" type="application/json">{"meta":{"name":"全国肝病联盟与2030慢性肝病行动专题知识库","version":"0.1","updated":"2026-08-28","card_count":10,"field_count":52},"cards":[{"文献唯一标识":"KB-0001","PMID":"未报告","DOI":"未报告","中文标题":"艾滋病毒、病毒性肝炎和性传播感染2022-2030年全球卫生部门战略","发布年份":"2022","发布日期":"2022-06","期刊或发布机构":"世界卫生组织（WHO）官方出版物","第一作者":"WHO（机构署名）","通讯作者":"WHO","作者单位":"世界卫生组织，日内瓦，瑞士","国家/地区":"国际组织（WHO，日内瓦）","是否中国研究":"否","是否中国多中心研究":"否","文献类型":"国际政策文件/全球卫生部门战略","证据等级":"A","研究设计":"NA（政策战略文件）","研究阶段":"不适用","样本量":"不适用","研究人群":"全球 HBV/HCV/HIV/STI 感染者（公共卫生层面）","初治/经治":"不适用","HBeAg状态":"不适用","是否肝硬化":"不适用","治疗方案":"不适用","对照方案":"不适用","治疗时间":"不适用","随访时间":"2022-2030（8年实施期）","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"2030年消除病毒性肝炎公共卫生威胁：新发感染降90%、死亡降65%、诊断率90%、治疗率80%（以2020年为基线）","HBsAg清除率":"未报告","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"目标框架：2030年CHB相关死亡从82万例降至31万例（降65%）","安全性":"未报告","核心结论":"以2020年为基线，2030年CHB新发病例从150万例降至17万例、死亡从82万例降至31万例；诊断率90%、治疗率80%；2026年中期评估显示全球进度偏离轨道、病毒性肝炎死亡仍在上升","临床价值":"提供全球统一的消除病毒性肝炎量化指标体系与考核框架","对中国实践的启示":"我国2016年一般人群HBsAg流行率6.1%、慢性感染者约8600万，诊断率约22%、治疗率约15%，距90%/80%目标差距巨大，需扩大筛查与治疗","对2030行动的意义":"直接定义中国消除乙肝的目标框架与量化考核指标","对全国肝病联盟的意义":"为联盟建设提供顶层政策依据与量化考核参照","所属筛诊治管康环节":"筛-诊-治-管-康:全链条","所属一级专题":"T1","所属二级专题":"1-1（全球战略与2030目标）","适用患者分层":"全人群（公共卫生层面）","当前争议":"WHO目标基于2020年基线，部分国家（含中国）数据滞后，实现难度大；2026年WHO中期报告指出全球进度偏离轨道","研究局限":"非临床研究，无患者级数据；各国执行差异大，指标可达性不一","是否建议重点阅读":"是","建议关注优先级":"P0","原文链接":"https://www.who.int/teams/global-hiv-hepatitis-and-stis-programmes/strategies/global-health-sector-strategies","二次解读链接":"庄辉院士解读（中国工程院院士馆整理）：https://ysg.ckcest.cn/ysgNews/1755156.html"},{"文献唯一标识":"KB-0002","PMID":"36891718","DOI":"10.3760/cma.j.cn501113-20221204-00607","中文标题":"慢性乙型肝炎防治指南（2022年版）","发布年份":"2022","发布日期":"2022-12-20","期刊或发布机构":"中华肝脏病杂志 2022,30(12):1309-1331","第一作者":"中华医学会肝病学分会（机构署名）","通讯作者":"中华医学会肝病学分会、中华医学会感染病学分会","作者单位":"中华医学会肝病学分会、中华医学会感染病学分会","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"临床实践指南","证据等级":"A","研究设计":"指南（GRADE分级：证据A/B/C，推荐强度1/2）","研究阶段":"不适用","样本量":"不适用","研究人群":"中国CHB患者及HBV感染者（含预防、筛查、诊断、治疗、管理全流程）","初治/经治":"两者均有","HBeAg状态":"两者均有","是否肝硬化":"两者均有","治疗方案":"NAs（恩替卡韦/替诺福韦/丙酚替诺福韦/艾米替诺福韦）+ 聚乙二醇干扰素α；扩大抗病毒治疗适应证","对照方案":"不适用","治疗时间":"NAs长期、Peg-IFN 48周","随访时间":"未报告（指南）","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"推荐意见（A1/B1等）；扩大治疗适应证：HBV DNA阳性+ALT异常即启动治疗；肝硬化/肝癌家族史、>30岁、肝外表现等高危人群无论ALT高低均治疗","HBsAg清除率":"未报告","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告（指南层面以降低肝硬化/肝癌风险为原则）","安全性":"未报告","核心结论":"以更广泛筛查、更积极预防和抗病毒治疗为原则更新；大幅扩大治疗适应证；目标为实现WHO 2030消除目标（我国基线诊断率约22%、治疗率约15%）","临床价值":"中国CHB防治的权威基准文件，指导预防、诊断、治疗与随访全流程","对中国实践的启示":"提出我国诊断率22%、治疗率15%的基线差距；推荐一般人群HBsAg筛查（推荐意见8）","对2030行动的意义":"直接推动'扩大筛查-扩大治疗'策略在中国落地","对全国肝病联盟的意义":"联盟开展规范化诊疗培训、临床路径管理与质量考核的核心依据","所属筛诊治管康环节":"筛-诊-治-管-康:全链条","所属一级专题":"T1","所属二级专题":"1-2（中国防治策略与指南）","适用患者分层":"全部分层（预防-筛查-初治-经治-肝硬化-肝癌全程）","当前争议":"扩大治疗适应证的范围与卫生经济学平衡；部分推荐基于间接证据","研究局限":"指南非原始研究；部分推荐意见证据等级为C级","是否建议重点阅读":"是","建议关注优先级":"P0","原文链接":"https://pubmed.ncbi.nlm.nih.gov/36891718/","二次解读链接":"未报告"},{"文献唯一标识":"KB-0003","PMID":"未报告","DOI":"10.3760/cma.j.cn501113-20240723-00340","中文标题":"成人乙型肝炎病毒感染筛查、检测及管理专家建议","发布年份":"2024","发布日期":"2024-08","期刊或发布机构":"中华肝脏病杂志 2024,32(8):718-725","第一作者":"专家建议（机构署名，第一作者待核查）","通讯作者":"待核查","作者单位":"中华医学会肝病学分会等（全国专家，待核查）","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"专家建议/共识","证据等级":"A","研究设计":"专家共识（基于文献综述与专家讨论）","研究阶段":"不适用","样本量":"不适用","研究人群":"成人（一般人群筛查策略）","初治/经治":"不适用","HBeAg状态":"不适用","是否肝硬化":"不适用","治疗方案":"不适用","对照方案":"不适用","治疗时间":"不适用","随访时间":"不适用","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"推荐18岁以上成人一生至少筛查1次HBsAg；推广'乙肝三项'（HBsAg、抗-HBs、抗-HBc）普遍筛查；高危人群反复筛查","HBsAg清除率":"未报告","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"未报告","核心结论":"我国约7500万HBV感染者，诊断率约24%、治疗率约15%（部分资料为25%/15%）；普遍筛查是提高诊断率的第一抓手","临床价值":"为'筛'环节提供可落地的操作路径与检测策略","对中国实践的启示":"建议成人一生至少筛查1次，高危人群反复筛查；'乙肝三项'普遍筛查优于单一HBsAg","对2030行动的意义":"直接支撑诊断率90%目标（当前中国仅约24%）","对全国肝病联盟的意义":"联盟开展社区筛查、医防融合与基层培训的行动指南","所属筛诊治管康环节":"筛","所属一级专题":"T2","所属二级专题":"2-1（成人筛查策略）","适用患者分层":"全人群（成人，含高危人群）","当前争议":"普遍筛查vs高危人群筛查的费用效益比；诊断率数据存在24%/25%两个版本","研究局限":"专家建议性质，部分推荐基于间接证据；非原始研究","是否建议重点阅读":"是","建议关注优先级":"P0","原文链接":"待核查","二次解读链接":"未报告"},{"文献唯一标识":"KB-0004","PMID":"34435408","DOI":"10.1111/jvh.13599","中文标题":"PEG-IFN 治疗第24周平均HBsAg下降幅度预测后续HBsAg清除率（暂译）","发布年份":"2021","发布日期":"2021-11","期刊或发布机构":"Journal of Viral Hepatitis 2021,28(11):1563-1569","第一作者":"De Ridder F","通讯作者":"未报告","作者单位":"未报告（欧洲多中心，待核查）","国家/地区":"比利时（欧洲）","是否中国研究":"否","是否中国多中心研究":"否","文献类型":"队列研究（疗效预测分析）","证据等级":"B","研究设计":"队列研究（HBsAg动力学预测分析）","研究阶段":"不适用","样本量":"未报告","研究人群":"接受PEG-IFN为基础治疗的CHB患者","初治/经治":"混合（PEG-IFN为基础）","HBeAg状态":"未报告","是否肝硬化":"未报告","治疗方案":"PEG-IFN为基础（联合或不联合NAs）","对照方案":"未报告","治疗时间":"48周（PEG-IFN常规疗程）","随访时间":"未报告","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"24周平均HBsAg下降每多1 log10，后续HBsAg清除率预估增加20%-30%","HBV DNA下降速度或变化幅度":"未报告","主要终点":"HBsAg清除率（与24周下降幅度关联）","HBsAg清除率":"与24周HBsAg下降幅度正相关（每多降1 log10增加20%-30%）","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"未报告","核心结论":"第24周HBsAg动力学是后续HBsAg清除的强预测指标，支持治疗24周节点进行早期疗效判断与决策","临床价值":"为'24周无应答者调整方案'提供量化依据，提高治疗效率","对中国实践的启示":"与中国珠峰（12/24周下降阈值）和绿洲预测模型互补，构成早期疗效预测证据链","对2030行动的意义":"优化治疗资源配置，提高功能性治愈路径效率","对全国肝病联盟的意义":"联盟制定个体化治疗路径（早期疗效评估节点）的参考依据","所属筛诊治管康环节":"治","所属一级专题":"T3","所属二级专题":"3-1（疗效早期预测）","适用患者分层":"PEG-IFN治疗人群（24周疗效评估节点）","当前争议":"未报告","研究局限":"样本量未报告；预测价值需前瞻性验证","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://pubmed.ncbi.nlm.nih.gov/34435408/","二次解读链接":"未报告"},{"文献唯一标识":"KB-0005","PMID":"39702655","DOI":"10.1007/s12072-024-10764-5","中文标题":"绿洲（OASIS）项目：PegIFNα-2b治疗48周HBsAg清除预测模型","发布年份":"2024","发布日期":"2024","期刊或发布机构":"Hepatology International 2024","第一作者":"未报告（绿洲项目组）","通讯作者":"未报告","作者单位":"中国（绿洲项目组，多中心）","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"队列研究（预测模型开发与验证）","证据等级":"B","研究设计":"前瞻性真实世界研究（预测模型）","研究阶段":"不适用","样本量":"未报告","研究人群":"接受PegIFNα-2b治疗的CHB患者","初治/经治":"未报告（模型纳入肝硬化变量）","HBeAg状态":"未报告","是否肝硬化":"包含（模型纳入肝硬化变量）","治疗方案":"PegIFNα-2b","对照方案":"未报告","治疗时间":"48周","随访时间":"48周","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"48周HBsAg清除（预测模型）","HBsAg清除率":"未报告（模型输出预测概率）","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"未报告","核心结论":"Logit(P)=0.92+性别×0.66−HBsAg(log)×0.96−肝硬化×0.88；模型AUC 0.80（开发）/0.82（验证）","临床价值":"提供可直接用于临床的HBsAg清除概率计算工具，支持治疗前患者筛选","对中国实践的启示":"中国人群专用预测模型，支撑'优选人群-个体化治疗'策略","对2030行动的意义":"提高功能性治愈路径的精准性与效率","对全国肝病联盟的意义":"联盟可将其嵌入临床决策支持工具，统一优选标准","所属筛诊治管康环节":"治","所属一级专题":"T3","所属二级专题":"3-1（疗效早期预测）","适用患者分层":"PegIFNα-2b治疗候选人群","当前争议":"未报告","研究局限":"外部验证范围有限；预测因子（性别/基线HBsAg/肝硬化）在基层可及性待评估","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://pubmed.ncbi.nlm.nih.gov/39702655/","二次解读链接":"未报告"},{"文献唯一标识":"KB-0006","PMID":"41638418","DOI":"待核查（ScienceDirect PII: S1542-3565(26)00057-1）","中文标题":"聚乙二醇干扰素α-2b提高核苷（酸）类似物抑制的低HBsAg慢性乙型肝炎患者的HBsAg清除率：中国珠峰（Everest）研究","发布年份":"2026","发布日期":"2026-01（在线发表）","期刊或发布机构":"Clinical Gastroenterology and Hepatology（IF 12.2）","第一作者":"Xie C（谢婵）、Lin BL（林炳亮）、Mo ZS（莫志硕）等（共同第一作者）","通讯作者":"Gao ZL（高志良，中山大学附属第三医院）、Zhuang H（庄辉，北京大学医学部）","作者单位":"中山大学附属第三医院牵头，覆盖全国391家医院","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"前瞻性多中心真实世界研究","证据等级":"B","研究设计":"前瞻性、多中心、真实世界研究（NCT04035837），倾向性评分加权（PSW）调整","研究阶段":"确证性（真实世界，最大样本量）","样本量":"筛查23,412例；FAS 15,896例；PPS 12,260例","研究人群":"NAs经治>1年、HBeAg阴性、HBV DNA检测不到、HBsAg≤1500 IU/mL的CHB患者（18-60岁）","初治/经治":"经治","HBeAg状态":"阴性","是否肝硬化":"未报告（入组未提及肝硬化分层）","治疗方案":"PegIFNα-2b（换用或加用，48周）；实现清除者巩固治疗12-24周","对照方案":"NA单药（对照组数据）；换用组vs加用组","治疗时间":"48周（巩固12-24周）","随访时间":"停药后≥24周（巩固组随访至72周）","基线HBsAg":"平均377.9 IU/mL；37.8%患者≤100 IU/mL","基线HBV DNA":"检测不到（<100 IU/mL）","HBsAg下降速度或变化幅度":"12周下降>63.3%（AUC 0.766）、24周下降>95.3%（AUC 0.839）预测48周清除","HBV DNA下降速度或变化幅度":"未报告","主要终点":"48周HBsAg清除率","HBsAg清除率":"PSW后PPS 33.8%（12/24/36/48周梯度：11.8%/24.6%/30.7%/33.8%）；FAS 26.4%；停药24周后PPS 35.6%、FAS 28.7%；基线HBsAg≤100 IU/mL者PPS 53.6%（换用55.8%/加用53.0%），NA对照仅3.7%；巩固治疗组72周维持率85.9%（未巩固81%）","HBeAg血清学转换率":"48周20.7%（PPS）","病毒学应答率":"未报告（基线已病毒学抑制）","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"不良事件相关停药率FAS 5.6%/PPS 4.4%；多为可管理的血液学异常；中位治疗45.9周，43.1%治疗超过48周","核心结论":"PegIFNα-2b使NAs经治、HBeAg阴性、低HBsAg（≤1500 IU/mL）患者48周HBsAg清除率达33.8%（PPS），停药24周持久（35.6%）；换用与加用疗效相当但加用病毒学复发风险更低；基线HBsAg与早期HBsAg动态为强预测因子；巩固治疗提高持久性","临床价值":"临床治愈路径最高等级真实世界证据；确立'低HBsAg优选人群'标准与疗效预测指标","对中国实践的启示":"明确经治患者追求功能性治愈的适应人群、治疗策略与监测节点（12/24周）","对2030行动的意义":"支撑'治疗率80%'目标下的高质量治疗（功能性治愈）","对全国肝病联盟的意义":"联盟开展慢乙肝临床治愈专病管理与真实世界研究的核心循证依据","所属筛诊治管康环节":"治","所属一级专题":"T4","所属二级专题":"4B-1（NAs经治临床治愈）","适用患者分层":"NAs经治、HBeAg阴性、HBV DNA检测不到、HBsAg≤1500 IU/mL","当前争议":"真实世界非随机，PSW无法完全消除选择偏倚；换用vs加用长期结局差异待观察","研究局限":"观察性真实世界设计；仅纳入低HBsAg经治人群，外推受限；肝硬化人群未报告","是否建议重点阅读":"是","建议关注优先级":"P0","原文链接":"https://www.sciencedirect.com/science/article/pii/S1542356526000571","二次解读链接":"雨露肝霖期刊导读：https://www.medsci.cn/article/show_article.do?id=1caa925939d8"},{"文献唯一标识":"KB-0007","PMID":"未报告","DOI":"未报告","中文标题":"容愈（E-cure）项目：非活动性HBsAg携带者（IHCs）PegIFNα序贯/联合治疗48周HBsAg清除率","发布年份":"2025","发布日期":"2025","期刊或发布机构":"APASL 2025年会会议摘要（口头报告OP0395）","第一作者":"Mo ZS（莫志硕）","通讯作者":"未报告","作者单位":"中山大学附属第三医院等（容愈项目组）","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"会议摘要（口头报告，全文待发表）","证据等级":"D","研究设计":"多中心真实世界研究（中期分析）","研究阶段":"确证性（中期）","样本量":"5,328例IHCs","研究人群":"非活动性HBsAg携带者（IHCs：HBsAg阳性、HBV DNA检测不到、ALT正常）","初治/经治":"未治疗/经治混合（IHCs人群）","HBeAg状态":"阴性（IHCs定义）","是否肝硬化":"否（IHCs定义）","治疗方案":"PegIFNα序贯/全程/单药/初始联合","对照方案":"未报告","治疗时间":"48周","随访时间":"48周","基线HBsAg":"分层：<100 / 100-1000 / >1000 IU/mL","基线HBV DNA":"检测不到（IHCs定义）","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"48周累积HBsAg清除率","HBsAg清除率":"总53%（序贯65.8%/全程58%/单药53.3%/初始联合34%）；基线HBsAg<100/100-1000/>1000 IU/mL组分别为72.56%/42.62%/8.89%","HBeAg血清学转换率":"34.1%","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"未报告","核心结论":"IHCs经PegIFNα序贯/联合治疗48周累积HBsAg清除率达53%，基线HBsAg越低清除率越高（<100 IU/mL组72.56%）","临床价值":"开辟IHCs人群功能性治愈路径（该人群传统上不主张抗病毒治疗）","对中国实践的启示":"IHCs人群基数大，管理策略或从'观察随访'转向'积极追求临床治愈'","对2030行动的意义":"扩大功能性治愈覆盖面，提升治疗率质量","对全国肝病联盟的意义":"联盟制定IHCs管理路径与功能性治愈专病项目的重要参考","所属筛诊治管康环节":"治/管","所属一级专题":"T4","所属二级专题":"4D-1（HBeAg阴性慢感染/IHCs管理）","适用患者分层":"非活动性HBsAg携带者（HBV DNA检测不到、ALT正常）","当前争议":"IHCs治疗适应证的卫生经济学与安全性平衡；'观察'vs'干预'策略之争","研究局限":"会议摘要，方法学细节有限；正式全文待发表，证据等级待升级","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"未报告（APASL 2025会议摘要集）","二次解读链接":"未报告"},{"文献唯一标识":"KB-0008","PMID":"未报告","DOI":"10.1016/j.jhep.2024.08.010","中文标题":"B-Together研究：bepirovirsen后序贯Peg-IFN可能减少慢性乙型肝炎停药后复发","发布年份":"2025","发布日期":"2025-02","期刊或发布机构":"Journal of Hepatology 2025,82(2):222-234","第一作者":"Buti M","通讯作者":"未报告","作者单位":"GSK与多国中心（11国52个中心）","国家/地区":"国际多中心（西班牙牵头）","是否中国研究":"否","是否中国多中心研究":"否","文献类型":"IIb期随机开放标签临床试验","证据等级":"B","研究设计":"多中心、随机、开放标签IIb期试验（NCT04676724）","研究阶段":"IIb期（新药）","样本量":"108例（Arm1 55、Arm2 53）","研究人群":"稳定NA治疗（≥6个月无调整）的CHB患者，排除替比夫定","初治/经治":"经治（NA稳定）","HBeAg状态":"74%阴性（80/108）","是否肝硬化":"未报告","治疗方案":"bepirovirsen 300mg每周（Arm1 24周/Arm2 12周，第4、11天负荷剂量）+序贯Peg-IFNα-2a 180μg每周（≤24周），背景NA持续","对照方案":"两臂比较（24周vs 12周bepi），无安慰剂对照","治疗时间":"bepi 12/24周 + Peg-IFN≤24周","随访时间":"至72周","基线HBsAg":">1000 IU/mL者占69%","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"序贯治疗结束后24周内各次访视HBsAg（<0.05 IU/mL）与HBV DNA（<20 IU/mL）均低于LLOQ的患者比例","HBsAg清除率":"主要终点Arm1 9%（5/55）、Arm2 15%（8/53）；bepi治疗结束时36%/23%达HBsAg+DNA<LLOQ，其中40%/42%在Peg-IFN前复发","HBeAg血清学转换率":"未报告（HBeAg阳性者抗-HBe阳转率bepi结束时57%/7%）","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"不良事件常见（Arm1 95%/Arm2 98%），多为注射部位红斑；停药率4%；无严重肝损伤；9例SAE（8例患者）","核心结论":"bepirovirsen序贯Peg-IFN使9%-15%的NA经治患者实现停药后24周HBsAg与HBV DNA持续低于检测下限；序贯策略可能降低复发；后续机制研究提示ALT升高反映治疗性免疫应答（感染肝细胞清除）","临床价值":"首个ASO类新药向功能性治愈方向推进的IIb期关键证据，支持序贯治疗策略","对中国实践的启示":"新药可及性尚早；'ALT升高=治疗应答'机制对干扰素联合策略设计有参考价值","对2030行动的意义":"新药管线是突破功能性治愈率上限的关键变量","对全国肝病联盟的意义":"联盟应跟踪新药进展，布局联合治疗临床研究","所属筛诊治管康环节":"治","所属一级专题":"T4","所属二级专题":"4E-1（新药管线：ASO/siRNA等）","适用患者分层":"NA经治、基线HBsAg较低者更可能应答","当前争议":"功能性治愈定义与持久性；ALT升高解读（治疗性应答vs药物性肝损伤）；9%-15%疗效与成本","研究局限":"II期样本量小、开放标签、无安慰剂对照；长期持久性待B-Sure研究（NCT04954859）确认","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://doi.org/10.1016/j.jhep.2024.08.010","二次解读链接":"生物通中文报道：https://www.ebiotrade.com/newsf/2025-10/20251004215115900.htm"},{"文献唯一标识":"KB-0009","PMID":"38817899","DOI":"10.3389/fonc.2024.1398968","中文标题":"HBV相关肝硬化患者的肝细胞癌风险：基于4年回顾性队列的竞争风险列线图","发布年份":"2024","发布日期":"2024-05-16","期刊或发布机构":"Frontiers in Oncology 2024,14:1398968","第一作者":"Guo DD（郭丹丹）","通讯作者":"Li K（李康）、Zhang YH（张永宏）","作者单位":"首都医科大学附属北京佑安医院（肿瘤介入治疗中心/生物医学信息中心）","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"否","文献类型":"回顾性队列研究（预测模型开发与验证）","证据等级":"C","研究设计":"回顾性队列 + 竞争风险模型（Fine-Gray），MICE多重插补（20次）","研究阶段":"模型开发与验证","样本量":"1,401例（训练1,017、验证384）","研究人群":"HBV相关肝硬化患者（2011.1-2014.12入组）","初治/经治":"未报告（模型纳入'抗病毒治疗史'变量）","HBeAg状态":"两者（模型纳入HBeAg变量）","是否肝硬化":"全部是","治疗方案":"未报告（模型评估抗病毒治疗史的HCC风险效应）","对照方案":"不适用","治疗时间":"不适用","随访时间":"中位69.9个月（IQR 43.8-86.6）","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"HCC累积发生率（竞争事件：死亡、肝移植）","HBsAg清除率":"未报告","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"31.5%（442/1401）发生HCC；5年累积发生率22.9%（95%CI 20.8%-25.2%）；有抗病毒治疗史者HCC风险降低；模型AUC（12/24/36/60/96个月）0.68/0.69/0.70/0.68/0.80","安全性":"不适用","核心结论":"6因素（年龄、性别、抗病毒治疗史、HBeAg、饮酒史、AFP）竞争风险列线图可个体化预测HBV肝硬化患者HCC风险，优于传统风险分层","临床价值":"HCC风险分层与监测频率个体化工具（低危/高危筛选）","对中国实践的启示":"肝硬化人群需强化HCC监测；抗病毒治疗是降低HCC风险的关键可干预因素","对2030行动的意义":"支撑'死亡率降65%'目标（HCC早筛早诊早治）","对全国肝病联盟的意义":"联盟HCC全程管理（监测频率分层）工具参考","所属筛诊治管康环节":"诊/管","所属一级专题":"T5","所属二级专题":"5-1（HCC风险预测与监测）","适用患者分层":"HBV相关肝硬化患者","当前争议":"未报告","研究局限":"单中心回顾性设计；AUC中等等（0.68-0.80），96个月最高0.80；需外部多中心验证","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://pubmed.ncbi.nlm.nih.gov/38817899/","二次解读链接":"未报告"},{"文献唯一标识":"KB-0010","PMID":"未报告","DOI":"10.1097/HEP.0000000000000575","中文标题":"肝硬化乙型肝炎患者有限疗程治疗后肝细胞癌减少、HBsAg清除增加","发布年份":"2024","发布日期":"2024","期刊或发布机构":"Hepatology 2024,79(3):690-703","第一作者":"Jeng WJ（郑文雄）","通讯作者":"未报告","作者单位":"长庚纪念医院（中国台湾）","国家/地区":"中国台湾","是否中国研究":"是（中国台湾）","是否中国多中心研究":"否","文献类型":"观察性队列研究","证据等级":"B","研究设计":"观察性队列（有限疗程停药vs继续NA，长期随访）","研究阶段":"不适用","样本量":"未报告","研究人群":"肝硬化CHB患者（有限疗程停药组vs继续NA组）","初治/经治":"经治（NA）","HBeAg状态":"未报告","是否肝硬化":"全部是","治疗方案":"有限疗程（NA停药）vs 继续NA长期治疗","对照方案":"继续NA治疗","治疗时间":"有限疗程（停药）vs 长期NA","随访时间":"10年（长期随访）","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"HCC发生率、HBsAg清除率","HBsAg清除率":"有限疗程组HBsAg清除率高于继续NA组","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"10年HCC发生率：有限疗程组15.7% vs 继续NA组26.8%","安全性":"未报告","核心结论":"肝硬化患者有限疗程（停药）虽病毒学复发风险高，但10年HCC发生率低于继续NA组（15.7% vs 26.8%），且HBsAg清除更多；HBsAg清除与HCC风险降低相关","临床价值":"挑战'肝硬化必须终身治疗'的传统观念；提示停药后HBsAg清除的远期获益","对中国实践的启示":"肝硬化人群停药决策需个体化权衡（复发风险vs清除获益）；追求HBsAg清除的远期价值","对2030行动的意义":"减少肝硬化人群HCC负担，助力死亡率降低目标","对全国肝病联盟的意义":"联盟肝硬化全程管理策略（停药vs维持治疗）的循证参考","所属筛诊治管康环节":"管","所属一级专题":"T5","所属二级专题":"5-2（肝硬化管理策略与HCC预防）","适用患者分层":"肝硬化CHB患者（考虑有限疗程者）","当前争议":"停药策略安全性争议大（病毒学复发、肝衰竭风险）；观察性研究存在选择偏倚","研究局限":"观察性非随机设计；选择偏倚；样本量与基线详情未报告","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://doi.org/10.1097/HEP.0000000000000575","二次解读链接":"未报告"}]}</script>
+<script id="kb-data" type="application/json">{"meta":{"name":"全国肝病联盟与2030慢性肝病行动专题知识库","version":"0.2","updated":"2026-08-28","card_count":10,"field_count":52},"cards":[{"文献唯一标识":"KB-0001","PMID":"未报告","DOI":"未报告","中文标题":"艾滋病毒、病毒性肝炎和性传播感染2022-2030年全球卫生部门战略","发布年份":"2022","发布日期":"2022-06","期刊或发布机构":"世界卫生组织（WHO）官方出版物","第一作者":"WHO（机构署名）","通讯作者":"WHO","作者单位":"世界卫生组织，日内瓦，瑞士","国家/地区":"国际组织（WHO，日内瓦）","是否中国研究":"否","是否中国多中心研究":"否","文献类型":"国际政策文件/全球卫生部门战略","证据等级":"A","研究设计":"NA（政策战略文件）","研究阶段":"不适用","样本量":"不适用","研究人群":"全球 HBV/HCV/HIV/STI 感染者（公共卫生层面）","初治/经治":"不适用","HBeAg状态":"不适用","是否肝硬化":"不适用","治疗方案":"不适用","对照方案":"不适用","治疗时间":"不适用","随访时间":"2022-2030（8年实施期）","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"2030年消除病毒性肝炎公共卫生威胁：新发感染降90%、死亡降65%、诊断率90%、治疗率80%（以2020年为基线）","HBsAg清除率":"未报告","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"目标框架：2030年CHB相关死亡从82万例降至31万例（降65%）","安全性":"未报告","核心结论":"以2020年为基线，2030年CHB新发病例从150万例降至17万例、死亡从82万例降至31万例；诊断率90%、治疗率80%；2026年中期评估显示全球进度偏离轨道、病毒性肝炎死亡仍在上升","临床价值":"提供全球统一的消除病毒性肝炎量化指标体系与考核框架","对中国实践的启示":"我国2016年一般人群HBsAg流行率6.1%、慢性感染者约8600万，诊断率约22%、治疗率约15%，距90%/80%目标差距巨大，需扩大筛查与治疗","对2030行动的意义":"直接定义中国消除乙肝的目标框架与量化考核指标","对全国肝病联盟的意义":"为联盟建设提供顶层政策依据与量化考核参照","所属筛诊治管康环节":"筛-诊-治-管-康:全链条","所属一级专题":"T1","所属二级专题":"1-1（全球战略与2030目标）","适用患者分层":"全人群（公共卫生层面）","当前争议":"WHO目标基于2020年基线，部分国家（含中国）数据滞后，实现难度大；2026年WHO中期报告指出全球进度偏离轨道","研究局限":"非临床研究，无患者级数据；各国执行差异大，指标可达性不一","是否建议重点阅读":"是","建议关注优先级":"P0","原文链接":"https://www.who.int/teams/global-hiv-hepatitis-and-stis-programmes/strategies/global-health-sector-strategies","二次解读链接":"庄辉院士解读（中国工程院院士馆整理）：https://ysg.ckcest.cn/ysgNews/1755156.html"},{"文献唯一标识":"KB-0002","PMID":"36891718","DOI":"10.3760/cma.j.cn501113-20221204-00607","中文标题":"慢性乙型肝炎防治指南（2022年版）","发布年份":"2022","发布日期":"2022-12-20","期刊或发布机构":"中华肝脏病杂志 2022,30(12):1309-1331","第一作者":"中华医学会肝病学分会（机构署名）","通讯作者":"中华医学会肝病学分会、中华医学会感染病学分会","作者单位":"中华医学会肝病学分会、中华医学会感染病学分会","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"临床实践指南","证据等级":"A","研究设计":"指南（GRADE分级：证据A/B/C，推荐强度1/2）","研究阶段":"不适用","样本量":"不适用","研究人群":"中国CHB患者及HBV感染者（含预防、筛查、诊断、治疗、管理全流程）","初治/经治":"两者均有","HBeAg状态":"两者均有","是否肝硬化":"两者均有","治疗方案":"NAs（恩替卡韦/替诺福韦/丙酚替诺福韦/艾米替诺福韦）+ 聚乙二醇干扰素α；扩大抗病毒治疗适应证","对照方案":"不适用","治疗时间":"NAs长期、Peg-IFN 48周","随访时间":"未报告（指南）","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"推荐意见（A1/B1等）；扩大治疗适应证：HBV DNA阳性+ALT异常即启动治疗；肝硬化/肝癌家族史、>30岁、肝外表现等高危人群无论ALT高低均治疗","HBsAg清除率":"未报告","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告（指南层面以降低肝硬化/肝癌风险为原则）","安全性":"未报告","核心结论":"以更广泛筛查、更积极预防和抗病毒治疗为原则更新；大幅扩大治疗适应证；目标为实现WHO 2030消除目标（我国基线诊断率约22%、治疗率约15%）","临床价值":"中国CHB防治的权威基准文件，指导预防、诊断、治疗与随访全流程","对中国实践的启示":"提出我国诊断率22%、治疗率15%的基线差距；推荐一般人群HBsAg筛查（推荐意见8）","对2030行动的意义":"直接推动'扩大筛查-扩大治疗'策略在中国落地","对全国肝病联盟的意义":"联盟开展规范化诊疗培训、临床路径管理与质量考核的核心依据","所属筛诊治管康环节":"筛-诊-治-管-康:全链条","所属一级专题":"T1","所属二级专题":"1-2（中国防治策略与指南）","适用患者分层":"全部分层（预防-筛查-初治-经治-肝硬化-肝癌全程）","当前争议":"扩大治疗适应证的范围与卫生经济学平衡；部分推荐基于间接证据","研究局限":"指南非原始研究；部分推荐意见证据等级为C级","是否建议重点阅读":"是","建议关注优先级":"P0","原文链接":"https://pubmed.ncbi.nlm.nih.gov/36891718/","二次解读链接":"未报告"},{"文献唯一标识":"KB-0003","PMID":"未报告","DOI":"10.3760/cma.j.cn501113-20240723-00340","中文标题":"成人乙型肝炎病毒感染筛查、检测及管理专家建议","发布年份":"2024","发布日期":"2024-08","期刊或发布机构":"中华肝脏病杂志 2024,32(8):718-725","第一作者":"专家建议（机构署名，第一作者待核查）","通讯作者":"待核查","作者单位":"中华医学会肝病学分会等（全国专家，待核查）","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"专家建议/共识","证据等级":"A","研究设计":"专家共识（基于文献综述与专家讨论）","研究阶段":"不适用","样本量":"不适用","研究人群":"成人（一般人群筛查策略）","初治/经治":"不适用","HBeAg状态":"不适用","是否肝硬化":"不适用","治疗方案":"不适用","对照方案":"不适用","治疗时间":"不适用","随访时间":"不适用","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"推荐18岁以上成人一生至少筛查1次HBsAg；推广'乙肝三项'（HBsAg、抗-HBs、抗-HBc）普遍筛查；高危人群反复筛查","HBsAg清除率":"未报告","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"未报告","核心结论":"我国约7500万HBV感染者，诊断率约24%、治疗率约15%（部分资料为25%/15%）；普遍筛查是提高诊断率的第一抓手","临床价值":"为'筛'环节提供可落地的操作路径与检测策略","对中国实践的启示":"建议成人一生至少筛查1次，高危人群反复筛查；'乙肝三项'普遍筛查优于单一HBsAg","对2030行动的意义":"直接支撑诊断率90%目标（当前中国仅约24%）","对全国肝病联盟的意义":"联盟开展社区筛查、医防融合与基层培训的行动指南","所属筛诊治管康环节":"筛","所属一级专题":"T2","所属二级专题":"2-1（成人筛查策略）","适用患者分层":"全人群（成人，含高危人群）","当前争议":"普遍筛查vs高危人群筛查的费用效益比；诊断率数据存在24%/25%两个版本","研究局限":"专家建议性质，部分推荐基于间接证据；非原始研究","是否建议重点阅读":"是","建议关注优先级":"P0","原文链接":"待核查","二次解读链接":"未报告"},{"文献唯一标识":"KB-0004","PMID":"34435408","DOI":"10.1111/jvh.13599","中文标题":"PEG-IFN 治疗第24周平均HBsAg下降幅度预测后续HBsAg清除率（暂译）","发布年份":"2021","发布日期":"2021-11","期刊或发布机构":"Journal of Viral Hepatitis 2021,28(11):1563-1569","第一作者":"De Ridder F","通讯作者":"未报告","作者单位":"未报告（欧洲多中心，待核查）","国家/地区":"比利时（欧洲）","是否中国研究":"否","是否中国多中心研究":"否","文献类型":"队列研究（疗效预测分析）","证据等级":"B","研究设计":"队列研究（HBsAg动力学预测分析）","研究阶段":"不适用","样本量":"未报告","研究人群":"接受PEG-IFN为基础治疗的CHB患者","初治/经治":"混合（PEG-IFN为基础）","HBeAg状态":"未报告","是否肝硬化":"未报告","治疗方案":"PEG-IFN为基础（联合或不联合NAs）","对照方案":"未报告","治疗时间":"48周（PEG-IFN常规疗程）","随访时间":"未报告","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"24周平均HBsAg下降每多1 log10，后续HBsAg清除率预估增加20%-30%","HBV DNA下降速度或变化幅度":"未报告","主要终点":"HBsAg清除率（与24周下降幅度关联）","HBsAg清除率":"与24周HBsAg下降幅度正相关（每多降1 log10增加20%-30%）","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"未报告","核心结论":"第24周HBsAg动力学是后续HBsAg清除的强预测指标，支持治疗24周节点进行早期疗效判断与决策","临床价值":"为'24周无应答者调整方案'提供量化依据，提高治疗效率","对中国实践的启示":"与中国珠峰（12/24周下降阈值）和绿洲预测模型互补，构成早期疗效预测证据链","对2030行动的意义":"优化治疗资源配置，提高功能性治愈路径效率","对全国肝病联盟的意义":"联盟制定个体化治疗路径（早期疗效评估节点）的参考依据","所属筛诊治管康环节":"治","所属一级专题":"T3","所属二级专题":"3-1（疗效早期预测）","适用患者分层":"PEG-IFN治疗人群（24周疗效评估节点）","当前争议":"未报告","研究局限":"样本量未报告；预测价值需前瞻性验证","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://pubmed.ncbi.nlm.nih.gov/34435408/","二次解读链接":"未报告"},{"文献唯一标识":"KB-0005","PMID":"39702655","DOI":"10.1007/s12072-024-10764-5","中文标题":"绿洲（OASIS）项目：PegIFNα-2b治疗48周HBsAg清除预测模型","发布年份":"2024","发布日期":"2024","期刊或发布机构":"Hepatology International 2024","第一作者":"未报告（绿洲项目组）","通讯作者":"未报告","作者单位":"中国（绿洲项目组，多中心）","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"队列研究（预测模型开发与验证）","证据等级":"B","研究设计":"前瞻性真实世界研究（预测模型）","研究阶段":"不适用","样本量":"未报告","研究人群":"接受PegIFNα-2b治疗的CHB患者","初治/经治":"未报告（模型纳入肝硬化变量）","HBeAg状态":"未报告","是否肝硬化":"包含（模型纳入肝硬化变量）","治疗方案":"PegIFNα-2b","对照方案":"未报告","治疗时间":"48周","随访时间":"48周","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"48周HBsAg清除（预测模型）","HBsAg清除率":"未报告（模型输出预测概率）","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"未报告","核心结论":"Logit(P)=0.92+性别×0.66−HBsAg(log)×0.96−肝硬化×0.88；模型AUC 0.80（开发）/0.82（验证）","临床价值":"提供可直接用于临床的HBsAg清除概率计算工具，支持治疗前患者筛选","对中国实践的启示":"中国人群专用预测模型，支撑'优选人群-个体化治疗'策略","对2030行动的意义":"提高功能性治愈路径的精准性与效率","对全国肝病联盟的意义":"联盟可将其嵌入临床决策支持工具，统一优选标准","所属筛诊治管康环节":"治","所属一级专题":"T3","所属二级专题":"3-1（疗效早期预测）","适用患者分层":"PegIFNα-2b治疗候选人群","当前争议":"未报告","研究局限":"外部验证范围有限；预测因子（性别/基线HBsAg/肝硬化）在基层可及性待评估","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://pubmed.ncbi.nlm.nih.gov/39702655/","二次解读链接":"未报告"},{"文献唯一标识":"KB-0006","PMID":"41638418","DOI":"待核查（ScienceDirect PII: S1542-3565(26)00057-1）","中文标题":"聚乙二醇干扰素α-2b提高核苷（酸）类似物抑制的低HBsAg慢性乙型肝炎患者的HBsAg清除率：中国珠峰（Everest）研究","发布年份":"2026","发布日期":"2026-01（在线发表）","期刊或发布机构":"Clinical Gastroenterology and Hepatology（IF 12.2）","第一作者":"Xie C（谢婵）、Lin BL（林炳亮）、Mo ZS（莫志硕）等（共同第一作者）","通讯作者":"Gao ZL（高志良，中山大学附属第三医院）、Zhuang H（庄辉，北京大学医学部）","作者单位":"中山大学附属第三医院牵头，覆盖全国391家医院","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"前瞻性多中心真实世界研究","证据等级":"B","研究设计":"前瞻性、多中心、真实世界研究（NCT04035837），倾向性评分加权（PSW）调整","研究阶段":"确证性（真实世界，最大样本量）","样本量":"筛查23,412例；FAS 15,896例；PPS 12,260例","研究人群":"NAs经治>1年、HBeAg阴性、HBV DNA检测不到、HBsAg≤1500 IU/mL的CHB患者（18-60岁）","初治/经治":"经治","HBeAg状态":"阴性","是否肝硬化":"未报告（入组未提及肝硬化分层）","治疗方案":"PegIFNα-2b（换用或加用，48周）；实现清除者巩固治疗12-24周","对照方案":"NA单药（对照组数据）；换用组vs加用组","治疗时间":"48周（巩固12-24周）","随访时间":"停药后≥24周（巩固组随访至72周）","基线HBsAg":"平均377.9 IU/mL；37.8%患者≤100 IU/mL","基线HBV DNA":"检测不到（<100 IU/mL）","HBsAg下降速度或变化幅度":"12周下降>63.3%（AUC 0.766）、24周下降>95.3%（AUC 0.839）预测48周清除","HBV DNA下降速度或变化幅度":"未报告","主要终点":"48周HBsAg清除率","HBsAg清除率":"PSW后PPS 33.8%（12/24/36/48周梯度：11.8%/24.6%/30.7%/33.8%）；FAS 26.4%；停药24周后PPS 35.6%、FAS 28.7%；基线HBsAg≤100 IU/mL者PPS 53.6%（换用55.8%/加用53.0%），NA对照仅3.7%；巩固治疗组72周维持率85.9%（未巩固81%）","HBeAg血清学转换率":"48周20.7%（PPS）","病毒学应答率":"未报告（基线已病毒学抑制）","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"不良事件相关停药率FAS 5.6%/PPS 4.4%；多为可管理的血液学异常；中位治疗45.9周，43.1%治疗超过48周","核心结论":"PegIFNα-2b使NAs经治、HBeAg阴性、低HBsAg（≤1500 IU/mL）患者48周HBsAg清除率达33.8%（PPS），停药24周持久（35.6%）；换用与加用疗效相当但加用病毒学复发风险更低；基线HBsAg与早期HBsAg动态为强预测因子；巩固治疗提高持久性","临床价值":"临床治愈路径最高等级真实世界证据；确立'低HBsAg优选人群'标准与疗效预测指标","对中国实践的启示":"明确经治患者追求功能性治愈的适应人群、治疗策略与监测节点（12/24周）","对2030行动的意义":"支撑'治疗率80%'目标下的高质量治疗（功能性治愈）","对全国肝病联盟的意义":"联盟开展慢乙肝临床治愈专病管理与真实世界研究的核心循证依据","所属筛诊治管康环节":"治","所属一级专题":"T4","所属二级专题":"4B-1（NAs经治临床治愈）","适用患者分层":"NAs经治、HBeAg阴性、HBV DNA检测不到、HBsAg≤1500 IU/mL","当前争议":"真实世界非随机，PSW无法完全消除选择偏倚；换用vs加用长期结局差异待观察","研究局限":"观察性真实世界设计；仅纳入低HBsAg经治人群，外推受限；肝硬化人群未报告","是否建议重点阅读":"是","建议关注优先级":"P0","原文链接":"https://www.sciencedirect.com/science/article/pii/S1542356526000571","二次解读链接":"雨露肝霖期刊导读：https://www.medsci.cn/article/show_article.do?id=1caa925939d8"},{"文献唯一标识":"KB-0007","PMID":"未报告","DOI":"未报告","中文标题":"容愈（E-cure）项目：非活动性HBsAg携带者（IHCs）PegIFNα序贯/联合治疗48周HBsAg清除率","发布年份":"2025","发布日期":"2025","期刊或发布机构":"APASL 2025年会会议摘要（口头报告OP0395）","第一作者":"Mo ZS（莫志硕）","通讯作者":"未报告","作者单位":"中山大学附属第三医院等（容愈项目组）","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"是","文献类型":"会议摘要（口头报告，全文待发表）","证据等级":"D","研究设计":"多中心真实世界研究（中期分析）","研究阶段":"确证性（中期）","样本量":"5,328例IHCs","研究人群":"非活动性HBsAg携带者（IHCs：HBsAg阳性、HBV DNA检测不到、ALT正常）","初治/经治":"未治疗/经治混合（IHCs人群）","HBeAg状态":"阴性（IHCs定义）","是否肝硬化":"否（IHCs定义）","治疗方案":"PegIFNα序贯/全程/单药/初始联合","对照方案":"未报告","治疗时间":"48周","随访时间":"48周","基线HBsAg":"分层：<100 / 100-1000 / >1000 IU/mL","基线HBV DNA":"检测不到（IHCs定义）","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"48周累积HBsAg清除率","HBsAg清除率":"总53%（序贯65.8%/全程58%/单药53.3%/初始联合34%）；基线HBsAg<100/100-1000/>1000 IU/mL组分别为72.56%/42.62%/8.89%","HBeAg血清学转换率":"34.1%","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"未报告","核心结论":"IHCs经PegIFNα序贯/联合治疗48周累积HBsAg清除率达53%，基线HBsAg越低清除率越高（<100 IU/mL组72.56%）","临床价值":"开辟IHCs人群功能性治愈路径（该人群传统上不主张抗病毒治疗）","对中国实践的启示":"IHCs人群基数大，管理策略或从'观察随访'转向'积极追求临床治愈'","对2030行动的意义":"扩大功能性治愈覆盖面，提升治疗率质量","对全国肝病联盟的意义":"联盟制定IHCs管理路径与功能性治愈专病项目的重要参考","所属筛诊治管康环节":"治/管","所属一级专题":"T4","所属二级专题":"4D-1（HBeAg阴性慢感染/IHCs管理）","适用患者分层":"非活动性HBsAg携带者（HBV DNA检测不到、ALT正常）","当前争议":"IHCs治疗适应证的卫生经济学与安全性平衡；'观察'vs'干预'策略之争","研究局限":"会议摘要，方法学细节有限；正式全文待发表，证据等级待升级","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"未报告（APASL 2025会议摘要集）","二次解读链接":"未报告"},{"文献唯一标识":"KB-0008","PMID":"未报告","DOI":"10.1016/j.jhep.2024.08.010","中文标题":"B-Together研究：bepirovirsen后序贯Peg-IFN可能减少慢性乙型肝炎停药后复发","发布年份":"2025","发布日期":"2025-02","期刊或发布机构":"Journal of Hepatology 2025,82(2):222-234","第一作者":"Buti M","通讯作者":"未报告","作者单位":"GSK与多国中心（11国52个中心）","国家/地区":"国际多中心（西班牙牵头）","是否中国研究":"否","是否中国多中心研究":"否","文献类型":"IIb期随机开放标签临床试验","证据等级":"B","研究设计":"多中心、随机、开放标签IIb期试验（NCT04676724）","研究阶段":"IIb期（新药）","样本量":"108例（Arm1 55、Arm2 53）","研究人群":"稳定NA治疗（≥6个月无调整）的CHB患者，排除替比夫定","初治/经治":"经治（NA稳定）","HBeAg状态":"74%阴性（80/108）","是否肝硬化":"未报告","治疗方案":"bepirovirsen 300mg每周（Arm1 24周/Arm2 12周，第4、11天负荷剂量）+序贯Peg-IFNα-2a 180μg每周（≤24周），背景NA持续","对照方案":"两臂比较（24周vs 12周bepi），无安慰剂对照","治疗时间":"bepi 12/24周 + Peg-IFN≤24周","随访时间":"至72周","基线HBsAg":">1000 IU/mL者占69%","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"序贯治疗结束后24周内各次访视HBsAg（<0.05 IU/mL）与HBV DNA（<20 IU/mL）均低于LLOQ的患者比例","HBsAg清除率":"主要终点Arm1 9%（5/55）、Arm2 15%（8/53）；bepi治疗结束时36%/23%达HBsAg+DNA<LLOQ，其中40%/42%在Peg-IFN前复发","HBeAg血清学转换率":"未报告（HBeAg阳性者抗-HBe阳转率bepi结束时57%/7%）","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"未报告","安全性":"不良事件常见（Arm1 95%/Arm2 98%），多为注射部位红斑；停药率4%；无严重肝损伤；9例SAE（8例患者）","核心结论":"bepirovirsen序贯Peg-IFN使9%-15%的NA经治患者实现停药后24周HBsAg与HBV DNA持续低于检测下限；序贯策略可能降低复发；后续机制研究提示ALT升高反映治疗性免疫应答（感染肝细胞清除）","临床价值":"首个ASO类新药向功能性治愈方向推进的IIb期关键证据，支持序贯治疗策略","对中国实践的启示":"新药可及性尚早；'ALT升高=治疗应答'机制对干扰素联合策略设计有参考价值","对2030行动的意义":"新药管线是突破功能性治愈率上限的关键变量","对全国肝病联盟的意义":"联盟应跟踪新药进展，布局联合治疗临床研究","所属筛诊治管康环节":"治","所属一级专题":"T4","所属二级专题":"4E-1（新药管线：ASO/siRNA等）","适用患者分层":"NA经治、基线HBsAg较低者更可能应答","当前争议":"功能性治愈定义与持久性；ALT升高解读（治疗性应答vs药物性肝损伤）；9%-15%疗效与成本","研究局限":"II期样本量小、开放标签、无安慰剂对照；长期持久性待B-Sure研究（NCT04954859）确认","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://doi.org/10.1016/j.jhep.2024.08.010","二次解读链接":"生物通中文报道：https://www.ebiotrade.com/newsf/2025-10/20251004215115900.htm"},{"文献唯一标识":"KB-0009","PMID":"38817899","DOI":"10.3389/fonc.2024.1398968","中文标题":"HBV相关肝硬化患者的肝细胞癌风险：基于4年回顾性队列的竞争风险列线图","发布年份":"2024","发布日期":"2024-05-16","期刊或发布机构":"Frontiers in Oncology 2024,14:1398968","第一作者":"Guo DD（郭丹丹）","通讯作者":"Li K（李康）、Zhang YH（张永宏）","作者单位":"首都医科大学附属北京佑安医院（肿瘤介入治疗中心/生物医学信息中心）","国家/地区":"中国","是否中国研究":"是","是否中国多中心研究":"否","文献类型":"回顾性队列研究（预测模型开发与验证）","证据等级":"C","研究设计":"回顾性队列 + 竞争风险模型（Fine-Gray），MICE多重插补（20次）","研究阶段":"模型开发与验证","样本量":"1,401例（训练1,017、验证384）","研究人群":"HBV相关肝硬化患者（2011.1-2014.12入组）","初治/经治":"未报告（模型纳入'抗病毒治疗史'变量）","HBeAg状态":"两者（模型纳入HBeAg变量）","是否肝硬化":"全部是","治疗方案":"未报告（模型评估抗病毒治疗史的HCC风险效应）","对照方案":"不适用","治疗时间":"不适用","随访时间":"中位69.9个月（IQR 43.8-86.6）","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"HCC累积发生率（竞争事件：死亡、肝移植）","HBsAg清除率":"未报告","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"31.5%（442/1401）发生HCC；5年累积发生率22.9%（95%CI 20.8%-25.2%）；有抗病毒治疗史者HCC风险降低；模型AUC（12/24/36/60/96个月）0.68/0.69/0.70/0.68/0.80","安全性":"不适用","核心结论":"6因素（年龄、性别、抗病毒治疗史、HBeAg、饮酒史、AFP）竞争风险列线图可个体化预测HBV肝硬化患者HCC风险，优于传统风险分层","临床价值":"HCC风险分层与监测频率个体化工具（低危/高危筛选）","对中国实践的启示":"肝硬化人群需强化HCC监测；抗病毒治疗是降低HCC风险的关键可干预因素","对2030行动的意义":"支撑'死亡率降65%'目标（HCC早筛早诊早治）","对全国肝病联盟的意义":"联盟HCC全程管理（监测频率分层）工具参考","所属筛诊治管康环节":"诊/管","所属一级专题":"T5","所属二级专题":"5-1（HCC风险预测与监测）","适用患者分层":"HBV相关肝硬化患者","当前争议":"未报告","研究局限":"单中心回顾性设计；AUC中等等（0.68-0.80），96个月最高0.80；需外部多中心验证","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://pubmed.ncbi.nlm.nih.gov/38817899/","二次解读链接":"未报告"},{"文献唯一标识":"KB-0010","PMID":"未报告","DOI":"10.1097/HEP.0000000000000575","中文标题":"肝硬化乙型肝炎患者有限疗程治疗后肝细胞癌减少、HBsAg清除增加","发布年份":"2024","发布日期":"2024","期刊或发布机构":"Hepatology 2024,79(3):690-703","第一作者":"Jeng WJ（郑文雄）","通讯作者":"未报告","作者单位":"长庚纪念医院（中国台湾）","国家/地区":"中国台湾","是否中国研究":"是（中国台湾）","是否中国多中心研究":"否","文献类型":"观察性队列研究","证据等级":"B","研究设计":"观察性队列（有限疗程停药vs继续NA，长期随访）","研究阶段":"不适用","样本量":"未报告","研究人群":"肝硬化CHB患者（有限疗程停药组vs继续NA组）","初治/经治":"经治（NA）","HBeAg状态":"未报告","是否肝硬化":"全部是","治疗方案":"有限疗程（NA停药）vs 继续NA长期治疗","对照方案":"继续NA治疗","治疗时间":"有限疗程（停药）vs 长期NA","随访时间":"10年（长期随访）","基线HBsAg":"未报告","基线HBV DNA":"未报告","HBsAg下降速度或变化幅度":"未报告","HBV DNA下降速度或变化幅度":"未报告","主要终点":"HCC发生率、HBsAg清除率","HBsAg清除率":"有限疗程组HBsAg清除率高于继续NA组","HBeAg血清学转换率":"未报告","病毒学应答率":"未报告","生化学应答率":"未报告","肝癌发生或复发结局":"10年HCC发生率：有限疗程组15.7% vs 继续NA组26.8%","安全性":"未报告","核心结论":"肝硬化患者有限疗程（停药）虽病毒学复发风险高，但10年HCC发生率低于继续NA组（15.7% vs 26.8%），且HBsAg清除更多；HBsAg清除与HCC风险降低相关","临床价值":"挑战'肝硬化必须终身治疗'的传统观念；提示停药后HBsAg清除的远期获益","对中国实践的启示":"肝硬化人群停药决策需个体化权衡（复发风险vs清除获益）；追求HBsAg清除的远期价值","对2030行动的意义":"减少肝硬化人群HCC负担，助力死亡率降低目标","对全国肝病联盟的意义":"联盟肝硬化全程管理策略（停药vs维持治疗）的循证参考","所属筛诊治管康环节":"管","所属一级专题":"T5","所属二级专题":"5-2（肝硬化管理策略与HCC预防）","适用患者分层":"肝硬化CHB患者（考虑有限疗程者）","当前争议":"停药策略安全性争议大（病毒学复发、肝衰竭风险）；观察性研究存在选择偏倚","研究局限":"观察性非随机设计；选择偏倚；样本量与基线详情未报告","是否建议重点阅读":"是","建议关注优先级":"P1","原文链接":"https://doi.org/10.1097/HEP.0000000000000575","二次解读链接":"未报告"}]}</script>
 <script>
 (function(){
 "use strict";
@@ -212,35 +280,181 @@ function prioCls(p){
   if(p==="P2")return"b-P2"; return"b-P3";
 }
 
-function cardHTML(c){
+/* 取文本第一句（按中文句读断句） */
+function firstSent(t, maxLen){
+  var s = String(t||"").trim();
+  if(!s) return "";
+  var parts = s.split(/[。；;！？!?]/);
+  var first = (parts[0]||"").trim();
+  if(!first) first = s.slice(0, 40);
+  if(first.length > (maxLen||60)) first = first.slice(0, (maxLen||60)) + "…";
+  return first;
+}
+function isChina(c){
+  var v = clean(F(c,"是否中国研究"));
+  return v && v!=="否" && v!=="未报告" && v!=="国际" && v!=="国外";
+}
+
+/* ============ 洞察报告渲染 ============ */
+
+function buildFindings(hits){
+  var f = [];
+  hits.slice(0,3).forEach(function(h){
+    var c = h.c;
+    var title = clean(F(c,"中文标题"));
+    var t = clean(F(c,"核心结论"));
+    if(!t) return;
+    var first = firstSent(t, 68);
+    if(first) f.push({t:title, s:first});
+  });
+  return f;
+}
+
+function buildActions(hits){
+  var acts = [];
+  var seen = {};
+  hits.forEach(function(h){
+    if(acts.length>=3) return;
+    var c = h.c;
+    var t = clean(F(c,"对中国实践的启示")) || clean(F(c,"对2030行动的意义")) || clean(F(c,"核心结论"));
+    if(!t) return;
+    var first = firstSent(t, 58);
+    if(!first || seen[first]) return;
+    seen[first] = 1;
+    acts.push({s:first, t:clean(F(c,"中文标题"))});
+  });
+  return acts;
+}
+
+function metaLine(c){
+  var m = [];
+  var author = clean(F(c,"第一作者"));
+  var journal = clean(F(c,"期刊或发布机构"));
+  var year = clean(F(c,"发布年份"));
+  if(author) m.push('作者：'+esc(author));
+  if(journal) m.push(esc(journal));
+  if(year) m.push(esc(year));
+  var pmid = clean(F(c,"PMID"));
+  var doi = clean(F(c,"DOI"));
+  var link = clean(F(c,"原文链接"));
+  if(pmid && pmid!=="未报告") m.push('PMID：'+esc(pmid));
+  if(doi && doi!=="未报告") m.push('DOI：'+esc(doi));
+  if(link && link!=="未报告") m.push('<a href="'+esc(link)+'" target="_blank" rel="noopener">原文链接 ↗</a>');
+  return m.join('　');
+}
+
+function insightHTML(c){
   var g = clean(F(c,"证据等级"))||"D";
   var p = clean(F(c,"建议关注优先级"))||"P3";
   var title = clean(F(c,"中文标题")) || "未命名";
   var conc = clean(F(c,"核心结论"));
-  var meta = [];
-  var journal = clean(F(c,"期刊或发布机构"));
-  var year = clean(F(c,"发布年份"));
-  var author = clean(F(c,"第一作者"));
-  var t4 = clean(F(c,"所属一级专题"));
-  var htm = '<div class="ev">';
-  htm += '<div class="ev-top"><span class="badge '+badgeCls(g)+'">证据'+g+'</span>';
+  var clin = clean(F(c,"对中国实践的启示"));
+  var act  = clean(F(c,"对2030行动的意义"));
+  var value= clean(F(c,"临床价值"));
+  var htm = '<div class="insight">';
+  htm += '<div class="ins-top">';
+  htm += '<span class="badge '+badgeCls(g)+'">证据'+g+'</span>';
   htm += '<span class="badge '+prioCls(p)+'">'+p+'</span>';
-  htm += '<span class="badge b-P3">'+(t4?esc(t4):"")+'</span>';
-  htm += '<span class="ev-title">'+esc(title)+'</span></div>';
-  if(conc){ htm += '<div class="ev-conc">'+esc(conc)+'</div>'; }
-  htm += '<div class="ev-meta">';
-  if(author) htm += '<span>作者：'+esc(author)+'</span>';
-  if(journal) htm += '<span>'+esc(journal)+'</span>';
-  if(year) htm += '<span>'+esc(year)+'</span>';
-  var pmid = clean(F(c,"PMID"));
-  var doi = clean(F(c,"DOI"));
-  var link = clean(F(c,"原文链接"));
-  if(pmid && pmid!=="未报告") htm += '<span>PMID：'+esc(pmid)+'</span>';
-  if(doi && doi!=="未报告") htm += '<span>DOI：'+esc(doi)+'</span>';
-  if(link && link!=="未报告") htm += '<span><a href="'+esc(link)+'" target="_blank" rel="noopener">原文链接 ↗</a></span>';
-  htm += '</div></div>';
+  if(isChina(c)) htm += '<span class="badge b-CN">中国证据</span>';
+  htm += '<span class="ins-title">'+esc(title)+'</span></div>';
+  if(conc){ htm += '<div class="ins-abs">'+esc(conc)+'</div>'; }
+  var persp = '';
+  if(clin){ persp += '<div class="persp-line persp-clin"><span class="ic">💊</span><span class="lab">临床启示</span><span class="tx">'+esc(clin)+'</span></div>'; }
+  var mkt = act || value;
+  if(mkt){ persp += '<div class="persp-line persp-mkt"><span class="ic">📈</span><span class="lab">市场/行动启示</span><span class="tx">'+esc(mkt)+'</span></div>'; }
+  if(persp){ htm += '<div class="persp">'+persp+'</div>'; }
+  var ml = metaLine(c);
+  if(ml){ htm += '<div class="ins-meta">'+ml+'</div>'; }
+  htm += '</div>';
   return htm;
 }
+
+function renderReport(q, res){
+  var hits = res.hits;
+  var el = document.getElementById("result");
+  var htm = '';
+  /* —— 报告头 —— */
+  var topicSet = {};
+  var chinaN = 0, abN = 0;
+  hits.forEach(function(h){
+    var c = h.c;
+    topicSet[F(c,"所属一级专题")]=1;
+    if(isChina(c)) chinaN++;
+    var g = clean(F(c,"证据等级"));
+    if(g==="A"||g==="B") abN++;
+  });
+  var topicTags = '';
+  var tKeys = [];
+  for(var t in topicSet){ if(TOPICS[t]) tKeys.push(t); }
+  tKeys.sort();
+  tKeys.forEach(function(t){ topicTags += '<span class="rtag">'+TOPICS[t]+'</span>'; });
+  htm += '<div class="rep-head">';
+  htm += '<div class="rh-logo">全国肝病联盟与2030慢性肝病行动 · 专题知识库</div>';
+  htm += '<h3>关于「'+esc(q)+'」的证据洞察报告</h3>';
+  htm += '<div class="rh-sub">基于库内 '+hits.length+' 篇强相关文献的结构化总结与双视角启示</div>';
+  if(topicTags){ htm += '<div class="rep-tags">'+topicTags+'</div>'; }
+  htm += '<div class="rh-src">数据来源：专题知识库主表 · 生成日期 '+esc(KB.meta.updated||"")+' · 证据分级 A-D × 优先级 P0-P3</div>';
+  htm += '</div>';
+  /* —— 报告概览 —— */
+  htm += '<div class="rep-ov">';
+  htm += '<div class="ov-title">报告概览 · 证据全景</div>';
+  htm += '<div class="ov-grid">';
+  htm += '<div class="ov-cell"><div class="n">'+hits.length+'</div><div class="l">命中文献</div></div>';
+  htm += '<div class="ov-cell"><div class="n">'+chinaN+'</div><div class="l">中国证据</div></div>';
+  htm += '<div class="ov-cell"><div class="n">'+abN+'</div><div class="l">A+B级证据</div></div>';
+  htm += '<div class="ov-cell"><div class="n">'+tKeys.length+'</div><div class="l">覆盖专题</div></div>';
+  htm += '</div>';
+  /* 核心发现 */
+  var finds = buildFindings(hits);
+  if(finds.length){
+    htm += '<div class="finding"><div class="f-t">核心发现（按证据等级与优先级提取）</div>';
+    finds.forEach(function(fi, i){
+      htm += '<div class="f-it"><b>发现'+(i+1)+'：</b>'+esc(fi.s)+'</div>';
+      htm += '<div class="f-src">来源：'+esc(fi.t)+'</div>';
+    });
+    htm += '</div>';
+  }
+  htm += '</div>';
+  /* —— 分章洞察 —— */
+  var chapIdx = 0;
+  tKeys.forEach(function(t){
+    var sub = hits.filter(function(h){ return F(h.c,"所属一级专题")===t; });
+    if(!sub.length) return;
+    chapIdx++;
+    var cn = sub.filter(function(h){ return isChina(h.c); }).length;
+    htm += '<div class="chap">';
+    htm += '<div class="chap-head"><span class="chap-no">第'+('一二三四五六七'.charAt(chapIdx-1)||chapIdx)+'章</span>';
+    htm += '<span class="chap-title">'+TOPICS[t]+'</span>';
+    htm += '<span class="chap-cnt">'+sub.length+'篇 · 中国'+cn+'篇</span></div>';
+    /* 章节导语 */
+    var leadSrc = '';
+    for(var i=0;i<sub.length;i++){
+      var lc = sub[i].c;
+      leadSrc = clean(F(lc,"对中国实践的启示")) || clean(F(lc,"核心结论"));
+      if(leadSrc) break;
+    }
+    if(leadSrc){
+      htm += '<div class="chap-lead">本章聚焦「<b>'+TOPICS[t]+'</b>」方向，共 '+sub.length+' 篇证据。核心线索：'+esc(firstSent(leadSrc, 70))+'</div>';
+    }
+    sub.forEach(function(h){ htm += insightHTML(h.c); });
+    htm += '</div>';
+  });
+  /* —— 策略要点 —— */
+  var acts = buildActions(hits);
+  if(acts.length){
+    htm += '<div class="rep-action"><div class="a-title">策略要点 · 可行动建议</div>';
+    acts.forEach(function(a, i){
+      htm += '<div class="a-item"><span class="no">'+(i+1)+'</span><span class="tx"><b>'+esc(a.t)+'：</b>'+esc(a.s)+'</span></div>';
+    });
+    htm += '<div class="a-src">要点提取自库内最高等级证据的「对中国实践的启示 / 对2030行动的意义」，可点击证据卡片溯源原文。</div>';
+    htm += '</div>';
+  }
+  htm += '<div class="hint" style="text-align:center">以上洞察基于库内结构化字段自动拼装生成 · 命中 '+hits.length+' 条证据 · 可切换到「证据列表」逐条核对</div>';
+
+  el.innerHTML = '<div class="qa"><div class="qline"><div class="avatar">问</div><div class="txt">'+esc(q)+'</div></div><div class="aline"><div class="avatar">答</div><div class="body">'+htm+'</div></div></div>';
+}
+
+/* ============ 证据列表视图（保留） ============ */
 
 function buildStrategy(hits){
   var top = hits.slice(0,3).filter(function(h){ return rankGrade(F(h.c,"证据等级"))<=1; });
@@ -260,7 +474,38 @@ function buildStrategy(hits){
   return lines.join("<br>");
 }
 
-function renderAnswer(q, res){
+function cardHTML(c){
+  var g = clean(F(c,"证据等级"))||"D";
+  var p = clean(F(c,"建议关注优先级"))||"P3";
+  var title = clean(F(c,"中文标题")) || "未命名";
+  var conc = clean(F(c,"核心结论"));
+  var meta = [];
+  var journal = clean(F(c,"期刊或发布机构"));
+  var year = clean(F(c,"发布年份"));
+  var author = clean(F(c,"第一作者"));
+  var t4 = clean(F(c,"所属一级专题"));
+  var htm = '<div class="ev">';
+  htm += '<div class="ev-top"><span class="badge '+badgeCls(g)+'">证据'+g+'</span>';
+  htm += '<span class="badge '+prioCls(p)+'">'+p+'</span>';
+  if(isChina(c)) htm += '<span class="badge b-CN">中国证据</span>';
+  htm += '<span class="badge b-P3">'+(t4?esc(t4):"")+'</span>';
+  htm += '<span class="ev-title">'+esc(title)+'</span></div>';
+  if(conc){ htm += '<div class="ev-conc">'+esc(conc)+'</div>'; }
+  htm += '<div class="ev-meta">';
+  if(author) htm += '<span>作者：'+esc(author)+'</span>';
+  if(journal) htm += '<span>'+esc(journal)+'</span>';
+  if(year) htm += '<span>'+esc(year)+'</span>';
+  var pmid = clean(F(c,"PMID"));
+  var doi = clean(F(c,"DOI"));
+  var link = clean(F(c,"原文链接"));
+  if(pmid && pmid!=="未报告") htm += '<span>PMID：'+esc(pmid)+'</span>';
+  if(doi && doi!=="未报告") htm += '<span>DOI：'+esc(doi)+'</span>';
+  if(link && link!=="未报告") htm += '<span><a href="'+esc(link)+'" target="_blank" rel="noopener">原文链接 ↗</a></span>';
+  htm += '</div></div>';
+  return htm;
+}
+
+function renderCards(q, res){
   var topic = res.topic;
   var hits = res.hits;
   var el = document.getElementById("result");
@@ -293,11 +538,38 @@ function renderAnswer(q, res){
   el.innerHTML = htm;
 }
 
+/* ============ 空结果 / 入口 ============ */
+
+var CURRENT = {q:"", res:null, view:"report"};
+window.switchKbView = function(view){
+  CURRENT.view = view;
+  renderByView();
+};
+
 function ask(){
   var q = document.getElementById("q").value.trim();
   if(!q){ document.getElementById("q").focus(); return; }
-  renderAnswer(q, search(q));
+  CURRENT.q = q;
+  CURRENT.res = search(q);
+  CURRENT.view = "report";
+  renderByView();
   document.getElementById("result").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderByView(){
+  var vt = document.getElementById("viewToggle");
+  var view = CURRENT.view;
+  vt.style.display = "flex";
+  Array.prototype.forEach.call(vt.querySelectorAll(".vt"), function(x){
+    x.classList.toggle("on", x.getAttribute("data-v")===view);
+  });
+  if(CURRENT.res.hits.length===0){
+    renderCards(CURRENT.q, CURRENT.res);
+  }else if(view==="cards"){
+    renderCards(CURRENT.q, CURRENT.res);
+  }else{
+    renderReport(CURRENT.q, CURRENT.res);
+  }
 }
 
 function renderTopicNav(){
@@ -312,7 +584,10 @@ function renderTopicNav(){
     el.addEventListener("click", function(){
       var t = el.getAttribute("data-t");
       document.getElementById("q").value = TOPICS[t] + " 专题证据";
-      renderAnswer(TOPICS[t]+" 专题全部证据", {hits: CARDS.filter(function(c){return F(c,"所属一级专题")===t;}).map(function(c){return {c:c,score:1};}), topic:t});
+      CURRENT.q = TOPICS[t]+" 专题证据";
+      CURRENT.res = {hits: CARDS.filter(function(c){return F(c,"所属一级专题")===t;}).map(function(c){return {c:c,score:1};}), topic:t};
+      CURRENT.view = "report";
+      renderByView();
       Array.prototype.forEach.call(nav.querySelectorAll(".tp"), function(x){x.classList.remove("on");});
       el.classList.add("on");
     });
@@ -324,8 +599,7 @@ function init(){
   var topicSet={};
   CARDS.forEach(function(c){
     sT++;
-    var cn=clean(F(c,"是否中国研究"));
-    if(cn && cn!=="否" && cn!=="未报告") sC++;
+    if(isChina(c)) sC++;
     var g=clean(F(c,"证据等级"));
     if(g==="A"||g==="B") sAB++;
     topicSet[F(c,"所属一级专题")]=1;
@@ -345,8 +619,13 @@ function init(){
   renderTopicNav();
   document.getElementById("btn").addEventListener("click",ask);
   document.getElementById("q").addEventListener("keydown",function(e){ if(e.key==="Enter") ask(); });
+  Array.prototype.forEach.call(document.querySelectorAll(".vt"), function(x){
+    x.addEventListener("click", function(){
+      CURRENT.view = x.getAttribute("data-v");
+      renderByView();
+    });
+  });
 }
-init();
 try{ init(); }
 catch(e){
   var _r=document.getElementById("result");

@@ -67,7 +67,7 @@ def main():
     data = {
         "meta": {
             "name": "全国肝病联盟与2030慢性肝病行动专题知识库",
-            "version": "0.1",
+            "version": "0.2",
             "updated": "2026-08-28",
             "card_count": len(cards),
             "field_count": len(KEEP_KEYS),
