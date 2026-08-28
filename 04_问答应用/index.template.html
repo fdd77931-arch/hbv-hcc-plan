@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>全国肝病联盟与2030慢性肝病行动 · 专题知识库问答</title>
+<meta name="description" content="基于 55 字段结构化证据库的慢乙肝防治问答应用：证据分级、策略建议、来源可溯">
+<style>
+:root{
+  --blue:#185FA5; --blue-d:#0C447C; --blue-l:#E6F1FB; --blue-ll:#F4F9FE;
+  --teal:#0F6E56; --teal-l:#E1F5EE;
+  --amber:#854F0B; --amber-l:#FAEEDA;
+  --red:#A32D2D; --red-l:#FCEBEB;
+  --gray:#5F5E5A; --gray-l:#F1EFE8; --line:#DDE3EC;
+  --bg:#F5F8FC; --card:#FFFFFF; --txt:#1E2A3A; --txt2:#5B6B7F;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.65;padding-bottom:60px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#0C447C 0%,#185FA5 55%,#1D9E75 130%);color:#fff;padding:26px 0 22px;border-radius:0 0 22px 22px}
+header .wrap{display:flex;flex-direction:column;gap:6px}
+.logo{font-size:12px;letter-spacing:2px;opacity:.85;font-weight:500}
+h1{font-size:19px;font-weight:500;letter-spacing:.5px}
+.sub{font-size:12.5px;opacity:.92}
+.stats{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.stat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:5px 12px;font-size:12px}
+.stat b{font-size:15px;font-weight:500;margin-right:4px}
+.search{position:sticky;top:0;z-index:50;background:var(--bg);padding:14px 0 10px}
+.search .box{display:flex;gap:8px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:6px 6px 6px 14px;box-shadow:0 2px 10px rgba(16,42,67,.06);transition:border-color .2s}
+.search .box:focus-within{border-color:var(--blue)}
+#q{flex:1;border:none;outline:none;font-size:15px;background:transparent;color:var(--txt);padding:8px 0}
+#q::placeholder{color:#9AA7B8}
+#btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap}
+#btn:active{background:var(--blue-d)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;background:var(--card);border:1px solid var(--line);color:var(--blue);border-radius:999px;padding:5px 13px;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.chip:active{background:var(--blue-l)}
+#result{display:flex;flex-direction:column;gap:14px}
+.qa{border-radius:16px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.qline{display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);align-items:flex-start}
+.qline .avatar{width:30px;height:30px;border-radius:10px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;font-weight:500}
+.qline .txt{font-size:14.5px;font-weight:500;padding-top:4px}
+.aline{display:flex;gap:10px;padding:14px 16px}
+.aline .avatar{width:30px;height:30px;border-radius:10px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;font-weight:500}
+.aline .body{flex:1;min-width:0}
+.ans-title{font-size:14px;font-weight:500;color:var(--teal);margin-bottom:8px}
+.strategy{background:var(--teal-l);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;padding:10px 12px;font-size:13.5px;margin:8px 0 12px}
+.strategy b{color:var(--teal)}
+.evidence-list{display:flex;flex-direction:column;gap:10px}
+.ev{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+.ev-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:5px}
+.ev-title{font-size:13.5px;font-weight:500;color:var(--txt)}
+.badge{display:inline-flex;align-items:center;border-radius:6px;padding:1.5px 8px;font-size:11.5px;font-weight:500;letter-spacing:.5px}
+.b-A{background:var(--blue-l);color:var(--blue-d);border:1px solid #B5D4F4}
+.b-B{background:var(--teal-l);color:var(--teal);border:1px solid #9FE1CB}
+.b-C{background:var(--amber-l);color:var(--amber);border:1px solid #FAC775}
+.b-D{background:var(--gray-l);color:var(--gray);border:1px solid #D3D1C7}
+.b-P0{background:var(--red-l);color:var(--red);border:1px solid #F7C1C1}
+.b-P1{background:var(--amber-l);color:var(--amber);border:1px solid #FAC775}
+.b-P2{background:var(--blue-l);color:var(--blue-d);border:1px solid #B5D4F4}
+.b-P3{background:var(--gray-l);color:var(--gray);border:1px solid #D3D1C7}
+.ev-conc{font-size:13px;color:var(--txt);margin:4px 0}
+.ev-conc b{color:var(--blue-d)}
+.ev-meta{font-size:12px;color:var(--txt2);display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+.ev-meta a{color:var(--blue);text-decoration:none;word-break:break-all}
+.none{text-align:center;padding:30px 16px;color:var(--txt2);font-size:13.5px}
+.none .big{font-size:30px;margin-bottom:8px}
+.topic-nav{display:flex;gap:8px;overflow-x:auto;padding:6px 0 2px;scrollbar-width:none}
+.topic-nav::-webkit-scrollbar{display:none}
+.tp{flex-shrink:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--txt2);white-space:nowrap}
+.tp.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+footer{color:var(--txt2);font-size:11.5px;text-align:center;padding:22px 16px 0;line-height:1.8}
+.hint{font-size:12px;color:var(--txt2);margin-top:8px}
+@media (max-width:480px){
+  h1{font-size:17px}
+  .stat b{font-size:14px}
+  .qline,.aline{padding:12px 12px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">全国肝病联盟与2030慢性肝病行动</div>
+    <h1>专题知识库 · 证据问答</h1>
+    <div class="sub">结构化证据库驱动 · 证据等级分级 · 来源可追溯 · 策略建议</div>
+    <div class="stats">
+      <div class="stat"><b id="sTotal">0</b>篇收录</div>
+      <div class="stat"><b id="sChina">0</b>中国证据</div>
+      <div class="stat"><b id="sAB">0</b> A+B级</div>
+      <div class="stat"><b id="sT7">0</b> 个专题</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="search">
+    <div class="box">
+      <input id="q" type="search" placeholder="输入你的问题，如：初治患者如何选药？" autocomplete="off">
+      <button id="btn">提问</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="topic-nav" id="topicNav"></div>
+
+  <div id="result">
+    <div class="none" id="welcome">
+      <div class="big">🔬</div>
+      输入问题或点击上方示例提问。<br>回答基于库内已收录证据，按证据等级与优先级排序。
+    </div>
+  </div>
+
+  <footer>
+    本应用数据来源于公开文献与官方文件题录，仅供学习参考，不构成临床诊疗建议。<br>
+    库内证据按「证据等级 A-D × 关注优先级 P0-P3」双维分级，具体诊疗请遵医嘱。
+  </footer>
+</div>
+
+<script id="kb-data" type="application/json">__KB_DATA__</script>
+<script>
+(function(){
+"use strict";
+
+var KB = JSON.parse(document.getElementById("kb-data").textContent);
+var CARDS = KB.cards || [];
+
+var TOPICS = {
+  "T1": "指南政策", "T2": "筛查检测", "T3": "治疗策略", "T4": "治疗方案",
+  "T5": "肝癌早筛", "T6": "长期管理", "T7": "联盟建设"
+};
+
+var TOPIC_KEYWORDS = [
+  {t:"T7", kw:["联盟","门诊","规范化","医防融合","巡讲","培训","建设","医院管理","专项"]},
+  {t:"T5", kw:["肝癌","hcc","肝细胞癌","列线图","风险预测","afp","超声","早筛","筛查和监测","复发"]},
+  {t:"T2", kw:["筛查","检测","诊断","hbsag检测","高危人群","主动筛查","表面抗原","普遍筛查"]},
+  {t:"T3", kw:["治疗时机","启动治疗","alt","适应证","扩大治疗","阈值","治疗策略","治疗指征","正常alt"]},
+  {t:"T4", kw:["初治","经治","干扰素","恩替卡韦","替诺福韦","taf","tdf","etv","临床治愈","新药","联合","序贯","hbsag清除","血清学转换","病毒学应答","停药后","低病毒","核苷"]},
+  {t:"T6", kw:["随访","依从性","停药","复发","pgRNA","长期管理","监测","管理","生存"]},
+  {t:"T1", kw:["指南","政策","战略","2030","消除","行动","防治","健康中国","世卫","who","路线图"]}
+];
+
+var EXAMPLES = [
+  "初治患者怎么选药？",
+  "哪些人需要筛查乙肝？",
+  "临床治愈有多大可能？",
+  "肝癌风险怎么预测？",
+  "停药时机如何判断？",
+  "干扰素联合治疗怎么用？"
+];
+
+var KEY_FIELDS = ["中文标题","核心结论","治疗方案","适用患者分层","对中国实践的启示","对2030行动的意义","研究人群","主要终点","临床价值"];
+
+function F(c, key){
+  for(var k in c){ if(k.indexOf(key) >= 0) return c[k] || ""; }
+  return "";
+}
+function clean(s){ return String(s||"").trim(); }
+
+function rankGrade(g){ return {"A":0,"B":1,"C":2,"D":3}[g] ?? 4; }
+function rankPrio(p){ return {"P0":0,"P1":1,"P2":2,"P3":3}[p] ?? 4; }
+
+function findTopic(q){
+  var ql = q.toLowerCase();
+  for(var i=0;i<TOPIC_KEYWORDS.length;i++){
+    var g = TOPIC_KEYWORDS[i];
+    for(var j=0;j<g.kw.length;j++){
+      if(ql.indexOf(g.kw[j].toLowerCase()) >= 0) return g.t;
+    }
+  }
+  return null;
+}
+
+function search(q){
+  var ql = q.toLowerCase();
+  var topic = findTopic(q);
+  var hits = [];
+  CARDS.forEach(function(c){
+    var hay = [];
+    KEY_FIELDS.forEach(function(f){ var v=F(c,f); if(v) hay.push(v); });
+    var hayTxt = hay.join(" ").toLowerCase();
+    var score = 0;
+    var qParts = q.replace(/[？?。，,、\s]+/g," ").split(" ").filter(function(s){return s.length>1;});
+    if(qParts.length===0) qParts=[q];
+    qParts.forEach(function(p){
+      p=p.toLowerCase();
+      if(hayTxt.indexOf(p)>=0){ score += p.length>=4 ? 3 : 2; }
+    });
+    if(topic && F(c,"所属一级专题")===topic) score += 4;
+    if(topic && (hayTxt.indexOf(topic.toLowerCase())>=0)) score += 1;
+    if(score>0) hits.push({c:c, score:score});
+  });
+  hits.sort(function(a,b){
+    if(b.score!==a.score) return b.score-a.score;
+    var gd = rankGrade(F(b.c,"证据等级"))-rankGrade(F(a.c,"证据等级"));
+    if(gd!==0) return gd;
+    return rankPrio(F(b.c,"建议关注优先级"))-rankPrio(F(a.c,"建议关注优先级"));
+  });
+  return {hits:hits, topic:topic};
+}
+
+function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+
+function badgeCls(level){
+  if(level==="A")return"b-A"; if(level==="B")return"b-B";
+  if(level==="C")return"b-C"; return"b-D";
+}
+function prioCls(p){
+  if(p==="P0")return"b-P0"; if(p==="P1")return"b-P1";
+  if(p==="P2")return"b-P2"; return"b-P3";
+}
+
+function cardHTML(c){
+  var g = clean(F(c,"证据等级"))||"D";
+  var p = clean(F(c,"建议关注优先级"))||"P3";
+  var title = clean(F(c,"中文标题")) || "未命名";
+  var conc = clean(F(c,"核心结论"));
+  var meta = [];
+  var journal = clean(F(c,"期刊或发布机构"));
+  var year = clean(F(c,"发布年份"));
+  var author = clean(F(c,"第一作者"));
+  var t4 = clean(F(c,"所属一级专题"));
+  var htm = '<div class="ev">';
+  htm += '<div class="ev-top"><span class="badge '+badgeCls(g)+'">证据'+g+'</span>';
+  htm += '<span class="badge '+prioCls(p)+'">'+p+'</span>';
+  htm += '<span class="badge b-P3">'+(t4?esc(t4):"")+'</span>';
+  htm += '<span class="ev-title">'+esc(title)+'</span></div>';
+  if(conc){ htm += '<div class="ev-conc">'+esc(conc)+'</div>'; }
+  htm += '<div class="ev-meta">';
+  if(author) htm += '<span>作者：'+esc(author)+'</span>';
+  if(journal) htm += '<span>'+esc(journal)+'</span>';
+  if(year) htm += '<span>'+esc(year)+'</span>';
+  var pmid = clean(F(c,"PMID"));
+  var doi = clean(F(c,"DOI"));
+  var link = clean(F(c,"原文链接"));
+  if(pmid && pmid!=="未报告") htm += '<span>PMID：'+esc(pmid)+'</span>';
+  if(doi && doi!=="未报告") htm += '<span>DOI：'+esc(doi)+'</span>';
+  if(link && link!=="未报告") htm += '<span><a href="'+esc(link)+'" target="_blank" rel="noopener">原文链接 ↗</a></span>';
+  htm += '</div></div>';
+  return htm;
+}
+
+function buildStrategy(hits){
+  var top = hits.slice(0,3).filter(function(h){ return rankGrade(F(h.c,"证据等级"))<=1; });
+  if(top.length===0) top = hits.slice(0,2);
+  if(top.length===0) return "";
+  var lines = [];
+  top.forEach(function(h){
+    var c=h.c;
+    var impl = clean(F(c,"对中国实践的启示"));
+    var p2030 = clean(F(c,"对2030行动的意义"));
+    var s = "「"+clean(F(c,"中文标题"))+"」（证据"+clean(F(c,"证据等级"))+"）";
+    if(impl && impl!=="未报告") s += "："+impl;
+    else if(p2030 && p2030!=="未报告") s += "："+p2030;
+    else if(clean(F(c,"核心结论"))) s += "："+clean(F(c,"核心结论"));
+    lines.push(s);
+  });
+  return lines.join("<br>");
+}
+
+function renderAnswer(q, res){
+  var topic = res.topic;
+  var hits = res.hits;
+  var el = document.getElementById("result");
+  var htm = '<div class="qa">';
+  htm += '<div class="qline"><div class="avatar">问</div><div class="txt">'+esc(q)+'</div></div>';
+  htm += '<div class="aline"><div class="avatar">答</div><div class="body">';
+  if(hits.length===0){
+    htm += '<div class="ans-title">未检索到直接匹配的证据</div>';
+    htm += '<div class="ev-conc">当前库内尚未收录与"'+esc(q)+'"直接相关的文献。建议：</div>';
+    if(topic && TOPICS[topic]){
+      htm += '<div class="ev-conc">① 尝试浏览「'+TOPICS[topic]+'」专题下的全部证据；</div>';
+    }else{
+      htm += '<div class="ev-conc">① 换个关键词再试（如"筛查""干扰素""停药"）；</div>';
+    }
+    htm += '<div class="ev-conc">② 该主题可能属于待收录方向，可告知我们增补。</div>';
+    htm += '<div class="hint">提示：知识库持续更新中，当前收录 '+CARDS.length+' 篇。</div>';
+  }else{
+    var total = hits.length;
+    htm += '<div class="ans-title">共命中 '+total+' 条证据'+(topic&&TOPICS[topic]?'（聚焦专题：'+TOPICS[topic]+'）':'')+'</div>';
+    var strat = buildStrategy(hits);
+    if(strat){
+      htm += '<div class="strategy"><b>策略建议（基于最高等级证据）：</b><br>'+strat+'</div>';
+    }
+    htm += '<div class="evidence-list">';
+    hits.slice(0,8).forEach(function(h){ htm += cardHTML(h.c); });
+    if(hits.length>8) htm += '<div class="hint">… 还有 '+ (hits.length-8) +' 条相关证据，可缩小关键词查看</div>';
+    htm += '</div>';
+  }
+  htm += '</div></div></div>';
+  el.innerHTML = htm;
+}
+
+function ask(){
+  var q = document.getElementById("q").value.trim();
+  if(!q){ document.getElementById("q").focus(); return; }
+  renderAnswer(q, search(q));
+  document.getElementById("result").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderTopicNav(){
+  var nav = document.getElementById("topicNav");
+  var htm = '';
+  for(var t in TOPICS){
+    var n = CARDS.filter(function(c){ return F(c,"所属一级专题")===t; }).length;
+    htm += '<div class="tp" data-t="'+t+'">'+t+' '+TOPICS[t]+' <span style="opacity:.65">('+n+')</span></div>';
+  }
+  nav.innerHTML = htm;
+  nav.querySelectorAll(".tp").forEach(function(el){
+    el.addEventListener("click", function(){
+      var t = el.getAttribute("data-t");
+      document.getElementById("q").value = TOPICS[t] + " 专题证据";
+      renderAnswer(TOPICS[t]+" 专题全部证据", {hits: CARDS.filter(function(c){return F(c,"所属一级专题")===t;}).map(function(c){return {c:c,score:1};}), topic:t});
+      nav.querySelectorAll(".tp").forEach(function(x){x.classList.remove("on");});
+      el.classList.add("on");
+    });
+  });
+}
+
+function init(){
+  var sT=0,sC=0,sAB=0;
+  var topicSet={};
+  CARDS.forEach(function(c){
+    sT++;
+    var cn=clean(F(c,"是否中国研究"));
+    if(cn && cn!=="否" && cn!=="未报告") sC++;
+    var g=clean(F(c,"证据等级"));
+    if(g==="A"||g==="B") sAB++;
+    topicSet[F(c,"所属一级专题")]=1;
+  });
+  document.getElementById("sTotal").textContent=sT;
+  document.getElementById("sChina").textContent=sC;
+  document.getElementById("sAB").textContent=sAB;
+  document.getElementById("sT7").textContent=Object.keys(topicSet).length;
+  var chips=document.getElementById("chips");
+  chips.innerHTML=EXAMPLES.map(function(e){return '<div class="chip">'+esc(e)+'</div>';}).join("");
+  chips.querySelectorAll(".chip").forEach(function(el){
+    el.addEventListener("click",function(){
+      document.getElementById("q").value=el.textContent;
+      ask();
+    });
+  });
+  renderTopicNav();
+  document.getElementById("btn").addEventListener("click",ask);
+  document.getElementById("q").addEventListener("keydown",function(e){ if(e.key==="Enter") ask(); });
+}
+init();
+})();
+</script>
+</body>
+</html>
